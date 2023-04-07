@@ -1,16 +1,14 @@
 #include "calc.h"
 
-int main() {
-    char str_input[LEN] = "sin(5.5) * tan(3) + (42 - (4 * 2))";
+double calculate(char *str_input) {
     lexeme reverse_polish[LEN];
+    printf("%s", str_input);
     for (int i = 0; i < LEN; i++) {
         clear_lexeme(&reverse_polish[i]);
     }
     str_to_reverse_polish(str_input, reverse_polish);
-    output_arr(reverse_polish);
     double result = calculate_reverse_polish(reverse_polish);
-    printf("%lf\n", result);
-    return 0;
+    return result;
 }
 
 double calculate_reverse_polish(lexeme *reverse_polish) {
@@ -85,9 +83,9 @@ double calc_func(double number, char function) {
     return result;
 }
 
-double calc_unary_op(double number, char operator) {
+double calc_unary_op(double number, char op) {
     double result = 0;
-    switch (operator) {
+    switch (op) {
         case '-':
             result = -result;
             break;
@@ -98,9 +96,9 @@ double calc_unary_op(double number, char operator) {
     return result;
 }
 
-double calc_op(double number_1, double number_2, char operator) {
+double calc_op(double number_1, double number_2, char op) {
     double result = 0;
-    switch (operator) {
+    switch (op) {
         case '+':
             result = number_1 + number_2;
             break;

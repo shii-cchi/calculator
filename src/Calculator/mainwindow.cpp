@@ -109,10 +109,7 @@ void MainWindow::click_delete()
 
 void MainWindow::on_pushButton_dot_clicked()
 {
-    if (!(ui->result_window->text().contains('.')))
-    {
-        ui->result_window->setText(ui->result_window->text() + ".");
-    }
+    ui->result_window->setText(ui->result_window->text() + ".");
 }
 
 void MainWindow::click_plus_minus_mult_divide()
@@ -174,22 +171,44 @@ void MainWindow::click_func()
     }
 }
 
+void MainWindow::on_pushButton_x_clicked()
+{
+    QPushButton *button = (QPushButton *)sender();
+    QString new_result_window;
+    if (ui->result_window->text() == "0")
+    {
+        new_result_window = button->text();
+    }
+    else
+    {
+        new_result_window = ui->result_window->text() + button->text();
+    }
+    ui->result_window->setText(new_result_window);
+}
 
+void MainWindow::on_pushButton_unary_clicked()
+{
+    if (ui->result_window->text() == "0")
+    {
+        ui->result_window->setText("-");
+    }
+    else
+    {
+        ui->result_window->setText(ui->result_window->text() + "-");
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void MainWindow::on_pushButton_equal_clicked()
+{
+    double result;
+    char str [ui->result_window->text().length()];
+    for (int i = 0; i < ui->result_window->text().length(); i++)
+    {
+        str[i] = ui->result_window->text()[i].toLatin1();
+    }
+    result = calculate(str);
+    ui->result_window->setText(QString::number(result));
+}
 
 
 

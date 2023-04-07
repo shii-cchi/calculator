@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 
+extern "C" {
+    #include "calc.h"
+}
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -27,5 +31,8 @@ private slots:
     void on_pushButton_pow_clicked();
     void on_pushButton_mod_clicked();
     void click_func();
+    void on_pushButton_x_clicked();
+    void on_pushButton_unary_clicked();
+    void on_pushButton_equal_clicked();
 };
 #endif // MAINWINDOW_H
