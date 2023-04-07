@@ -25,5 +25,7 @@ private slots:
     void click_plus_minus_mult_divide();
     void click_bracket();
     void on_pushButton_pow_clicked();
+    void on_pushButton_mod_clicked();
+    void click_func();
 };
 #endif // MAINWINDOW_H

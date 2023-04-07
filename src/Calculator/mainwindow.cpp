@@ -28,6 +28,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pushButton_bracket_1,SIGNAL(clicked()),this,SLOT(click_bracket()));
     connect(ui->pushButton_bracket_2,SIGNAL(clicked()),this,SLOT(click_bracket()));
+
+    connect(ui->pushButton_lg,SIGNAL(clicked()),this,SLOT(click_func()));
+    connect(ui->pushButton_ln,SIGNAL(clicked()),this,SLOT(click_func()));
+    connect(ui->pushButton_sqrt,SIGNAL(clicked()),this,SLOT(click_func()));
+    connect(ui->pushButton_sin,SIGNAL(clicked()),this,SLOT(click_func()));
+    connect(ui->pushButton_cos,SIGNAL(clicked()),this,SLOT(click_func()));
+    connect(ui->pushButton_tan,SIGNAL(clicked()),this,SLOT(click_func()));
+    connect(ui->pushButton_asin,SIGNAL(clicked()),this,SLOT(click_func()));
+    connect(ui->pushButton_acos,SIGNAL(clicked()),this,SLOT(click_func()));
+    connect(ui->pushButton_atan,SIGNAL(clicked()),this,SLOT(click_func()));
 }
 
 MainWindow::~MainWindow()
@@ -62,11 +72,37 @@ void MainWindow::click_delete()
     {
         if (ui->result_window->text().length() > 1)
         {
-           ui->result_window->setText(ui->result_window->text().chopped(1));
+            QString new_window = ui->result_window->text();
+            if (new_window.last(1) == "(")
+            {
+                new_window = ui->result_window->text().chopped(1);
+                while (new_window.last(1) != "(" && new_window.last(1) != " ")
+                {
+                    if (new_window.length() == 1)
+                    {
+                        new_window = "0";
+                        break;
+                    }
+                    else
+                    {
+                        new_window = new_window.chopped(1);
+                    }
+                }
+                ui->result_window->setText(new_window);
+            }
+            else
+            {
+                new_window = new_window.chopped(1);
+                if (new_window.last(1) == " ")
+                {
+                   new_window = new_window.chopped(1);
+                }
+                ui->result_window->setText(new_window);
+            }
         }
         else if (ui->result_window->text().length() == 1)
         {
-           ui->result_window->setText("0");
+            ui->result_window->setText("0");
         }
     }
 }
@@ -103,14 +139,52 @@ void MainWindow::click_bracket()
     }
     else
     {
-        ui->result_window->setText(ui->result_window->text() + button->text() + " ");
+        ui->result_window->setText(ui->result_window->text() + button->text());
     }
 }
 
 void MainWindow::on_pushButton_pow_clicked()
 {
-    ui->result_window->setText(ui->result_window->text() + "^");
+    if (ui->result_window->text().last(1) != "^")
+    {
+        ui->result_window->setText(ui->result_window->text() + "^");
+    }
 }
+
+void MainWindow::on_pushButton_mod_clicked()
+{
+    QString new_result_window;
+    QPushButton *button = (QPushButton *)sender();
+    new_result_window = " " + button->text() + " ";
+    ui->result_window->setText(ui->result_window->text() + new_result_window);
+}
+
+void MainWindow::click_func()
+{
+    QString new_result_window;
+    QPushButton *button = (QPushButton *)sender();
+    new_result_window = button->text() + "(";
+    if (ui->result_window->text() == "0")
+    {
+        ui->result_window->setText(new_result_window);
+    }
+    else
+    {
+        ui->result_window->setText(ui->result_window->text() + new_result_window);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
