@@ -1,39 +1,121 @@
 #include "calc.h"
 
 // int main() {
-//     char str[LEN] = "-12 + 4";
-//     double result = calculate(str);
-//     printf("%f\n", result);
+//     char str[LEN] = "1 + 2 +";
+//     double result = 0;
+//     int status = calculate(str, &result);
+//     printf("%f\n%d\n", result, status);
 //     return 0;
 // }
 
-double calculate(char *str_input) {
+int calculate(char *str_input, double *result) {
+    int status = 0;
     lexeme reverse_polish[LEN];
     for (int i = 0; i < LEN; i++) {
         clear_lexeme(&reverse_polish[i]);
     }
-    str_to_reverse_polish(str_input, reverse_polish);
-    double result = calculate_reverse_polish(reverse_polish);
-    return result;
+    if (check_str_valid(str_input)) {
+        if (str_to_reverse_polish(str_input, reverse_polish)) {
+            if (check_valid(reverse_polish)) {
+                output_arr(reverse_polish);
+                *result = calculate_reverse_polish(reverse_polish);
+                status = 1;
+            }
+        }
+    }
+    return status;
+}
+
+int check_str_valid(char *str_input) {
+    int status = 1;
+    if (!check_dot_x(str_input)) {
+        status = 0;
+    }
+    if (!check_numbers(str_input)) {
+        status = 0;
+    }
+    return status;
+}
+
+int check_dot_x(char *str_input) {
+    int status = 1;
+    int count_dot = 0, count_x = 0;
+    for (int i = 0; i < (int)strlen(str_input); i++) {
+        if (str_input[i] == '.') {
+            count_dot++;
+            if (i == (int)strlen(str_input) - 1) {
+                if (!isdigit(str_input[i - 1])) {
+                    status = 0;
+                }
+            } else {
+                if (!isdigit(str_input[i - 1]) && !isdigit(str_input[i + 1])) {
+                    status = 0;
+                }
+            }
+        }
+        if (str_input[i] == 'x') {
+            count_x++;
+        }
+        if (str_input[i] == ' ') {
+            count_dot = 0;
+            count_x = 0;
+        }
+        if (count_dot > 1 || count_x > 1) {
+            status = 0;
+            break;
+        }
+    }
+    return status;
+}
+
+int check_numbers(char *str_input) {
+    int status = 1;
+    int digit = 0;
+    for (int i = 0; i < (int)strlen(str_input); i++) {
+        if (isdigit(str_input[i]) || str_input[i] == 'x') {
+            digit++;
+        }
+    }
+    if (digit == 0) {
+        status = 0;
+    }
+    return status;
+}
+
+int check_valid(lexeme *reverse_polish) {
+    int status = 1;
+    int index = 0, unary = 0, operators = 0, functions = 0, numbers = 0;
+    while (reverse_polish[index].type != UNDEFINED) {
+        if (reverse_polish[index].type == NUMBER) {
+            numbers++;
+        }
+        if (reverse_polish[index].type == OPERATOR) {
+            if (reverse_polish[index].unary == 1) {
+                unary++;
+            } else {
+                operators++;
+            }
+        }
+        index++;
+    }
+    if (numbers != operators + 1 || unary > numbers) {
+        status = 0;
+    }
+    printf("%d\n%d\n%d\n", numbers, operators, unary);
+    return status;
 }
 
 double calculate_reverse_polish(lexeme *reverse_polish) {
-    double result = 0, num_1 = 0, num_2 = 0;
+    double result = 0;
     int index_rev_pol = 0, index_num = 0;
     double numbers[LEN] = {0};
     while (reverse_polish[index_rev_pol].type != UNDEFINED) {
         if (reverse_polish[index_rev_pol].type == NUMBER) {
             numbers[index_num] = reverse_polish[index_rev_pol].number;
             index_num++;
-            // for (int i = 0; i < 5; i++) {
-            //     printf("1^ %lf\n", numbers[i]);
-            // }
         }
         if (reverse_polish[index_rev_pol].type == FUNCTION) {
             numbers[index_num - 1] = calc_func(numbers[index_num - 1], reverse_polish[index_rev_pol].lexeme_kind);
-            // for (int i = 0; i < 5; i++) {
-            //     printf("2^ %lf\n", numbers[i]);
-            // }
         }
         if (reverse_polish[index_rev_pol].type == OPERATOR) {
             if (reverse_polish[index_rev_pol].unary == 1) {
@@ -43,9 +125,6 @@ double calculate_reverse_polish(lexeme *reverse_polish) {
                 numbers[index_num - 1] = 0;
                 index_num--;
             }
-            // for (int i = 0; i < 5; i++) {
-            //     printf("3^ %lf\n", numbers[i]);
-            // }
         }
         index_rev_pol++;
     }

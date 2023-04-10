@@ -41,9 +41,14 @@ int str_to_reverse_polish(char *str_input, lexeme *reverse_polish) {
         }
     }
     while (is_empty_stack(&queue) != 1) {
-        reverse_polish[index_output] = peek(&queue);
-        index_output++;
-        pop(&queue);       
+        if (peek(&queue).type == FUNCTION || peek(&queue).type == BRACKET) {
+            status = 0;
+            break;
+        } else {
+            reverse_polish[index_output] = peek(&queue);
+            index_output++;
+            pop(&queue); 
+        }      
     }
     return status;
 }
@@ -56,7 +61,7 @@ int define_lex(char *str_input, lexeme *lex, int index_input, int *status) {
     if (lex_kind = is_operator(str_input, &index_input)) {
         lex->type = OPERATOR;
         lex->lexeme_kind = lex_kind;
-        if (strchr("+-", lex_kind) && str_input[index_input] != ' ') {
+        if (strchr("+-", lex_kind) && (str_input[index_input] == 'x' || isdigit(str_input[index_input]))) {
             lex->unary = 1;
         }
     } else if (lex_kind = is_func(str_input, &index_input)) {

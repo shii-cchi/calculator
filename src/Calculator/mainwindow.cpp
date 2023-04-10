@@ -207,8 +207,12 @@ void MainWindow::on_pushButton_equal_clicked()
     double result;
     QByteArray arr = ui->result_window->text().toLocal8Bit();
     char *str = arr.data();
-    result = calculate(str);
-    ui->result_window->setText(QString::number(result));
+    int status = calculate(str, &result);
+    if (status) {
+        ui->result_window->setText(QString::number(result));
+    } else {
+        ui->result_window->setText("Calculation Error");
+    }
 }
 
 
