@@ -98,7 +98,7 @@ int check_valid(lexeme *reverse_polish) {
         }
         index++;
     }
-    if (numbers != operators + 1 || unary > numbers) {
+    if (numbers < operators + 1 || unary > numbers) {
         status = 0;
     }
     printf("%d\n%d\n%d\n", numbers, operators, unary);
