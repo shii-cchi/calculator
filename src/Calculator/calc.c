@@ -1,5 +1,12 @@
 #include "calc.h"
 
+// int main() {
+//     char str[LEN] = "log(20)";
+//     double result = calculate(str);
+//     printf("%f\n", result);
+//     return 0;
+// }
+
 double calculate(char *str_input) {
     lexeme reverse_polish[LEN];
     for (int i = 0; i < LEN; i++) {

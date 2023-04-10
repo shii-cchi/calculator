@@ -8,6 +8,7 @@ int str_to_reverse_polish(char *str_input, lexeme *reverse_polish) {
     int index_input = 0, index_output = 0, status = 1;
     while (index_input < length_input) {
         index_input = define_lex(str_input, &lex, index_input, &status);
+        printf("%d\n", index_input);
         if (lex.type == NUMBER) {
             reverse_polish[index_output] = lex;
             index_output++;
@@ -104,7 +105,7 @@ char is_operator(char *str_input, int *index_input) {
     if (strchr("+-*/^", str_input[*index_input])) {
         status = str_input[*index_input];
         *index_input += 1; 
-    } else if (strstr(str_input, "mod") - str_input - 1 == *index_input) {
+    } else if (strstr(str_input, "mod") - str_input == *index_input) {
         status = 'm';
         *index_input += 3;
     }
