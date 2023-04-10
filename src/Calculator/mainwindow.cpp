@@ -67,6 +67,10 @@ void MainWindow::on_pushButton_delete_all_clicked()
 void MainWindow::on_pushButton_delete_1_clicked() 
 {
     QString window = ui->result_window->text();
+    if (window == "Calculation Error")
+    {
+        window = "0";
+    }
     if (window.length() > 1)
     {
         do {
@@ -78,7 +82,7 @@ void MainWindow::on_pushButton_delete_1_clicked()
             window = window.chopped(1);
         }
     }
-    if (window.length() == 1 || window == "Calculation Error")
+    if (window.length() == 1)
     {
         window = "0";
     }
