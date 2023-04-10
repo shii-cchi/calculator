@@ -13,7 +13,6 @@ double calculate(char *str_input) {
         clear_lexeme(&reverse_polish[i]);
     }
     str_to_reverse_polish(str_input, reverse_polish);
-    output_arr(reverse_polish);
     double result = calculate_reverse_polish(reverse_polish);
     return result;
 }
