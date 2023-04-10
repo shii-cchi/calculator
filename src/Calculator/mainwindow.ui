@@ -73,7 +73,7 @@ background-color: white;</string>
 }</string>
     </property>
     <property name="text">
-     <string>lg</string>
+     <string>log</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_ln">
