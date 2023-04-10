@@ -2,7 +2,6 @@
 
 double calculate(char *str_input) {
     lexeme reverse_polish[LEN];
-    printf("%s", str_input);
     for (int i = 0; i < LEN; i++) {
         clear_lexeme(&reverse_polish[i]);
     }

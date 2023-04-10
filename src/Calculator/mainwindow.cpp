@@ -201,11 +201,13 @@ void MainWindow::on_pushButton_unary_clicked()
 void MainWindow::on_pushButton_equal_clicked()
 {
     double result;
-    char str [ui->result_window->text().length()];
-    for (int i = 0; i < ui->result_window->text().length(); i++)
-    {
-        str[i] = ui->result_window->text()[i].toLatin1();
-    }
+//    char str [ui->result_window->text().length()];
+//    for (int i = 0; i < ui->result_window->text().length(); i++)
+//    {
+//        str[i] = ui->result_window->text()[i].toLatin1();
+//    }
+    QByteArray arr = ui->result_window->text().toLocal8Bit();
+    char *str = arr.data();
     result = calculate(str);
     ui->result_window->setText(QString::number(result));
 }
