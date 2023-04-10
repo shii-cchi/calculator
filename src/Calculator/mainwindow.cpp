@@ -17,14 +17,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_7,SIGNAL(clicked()),this,SLOT(click_numbers()));
     connect(ui->pushButton_8,SIGNAL(clicked()),this,SLOT(click_numbers()));
     connect(ui->pushButton_9,SIGNAL(clicked()),this,SLOT(click_numbers()));
+    connect(ui->pushButton_x,SIGNAL(clicked()),this,SLOT(click_numbers()));
 
-    connect(ui->pushButton_delete_all,SIGNAL(clicked()),this,SLOT(click_delete()));
-    connect(ui->pushButton_delete_1,SIGNAL(clicked()),this,SLOT(click_delete()));
-
-    connect(ui->pushButton_plus,SIGNAL(clicked()),this,SLOT(click_plus_minus_mult_divide()));
-    connect(ui->pushButton_minus,SIGNAL(clicked()),this,SLOT(click_plus_minus_mult_divide()));
-    connect(ui->pushButton_mult,SIGNAL(clicked()),this,SLOT(click_plus_minus_mult_divide()));
-    connect(ui->pushButton_divide,SIGNAL(clicked()),this,SLOT(click_plus_minus_mult_divide()));
+    connect(ui->pushButton_plus,SIGNAL(clicked()),this,SLOT(click_operators()));
+    connect(ui->pushButton_minus,SIGNAL(clicked()),this,SLOT(click_operators()));
+    connect(ui->pushButton_mult,SIGNAL(clicked()),this,SLOT(click_operators()));
+    connect(ui->pushButton_divide,SIGNAL(clicked()),this,SLOT(click_operators()));
+    connect(ui->pushButton_mod,SIGNAL(clicked()),this,SLOT(click_operators()));
 
     connect(ui->pushButton_bracket_1,SIGNAL(clicked()),this,SLOT(click_bracket()));
     connect(ui->pushButton_bracket_2,SIGNAL(clicked()),this,SLOT(click_bracket()));
@@ -49,7 +48,7 @@ void MainWindow::click_numbers()
 {
     QPushButton *button = (QPushButton *)sender();
     QString new_result_window;
-    if (ui->result_window->text() == "0")
+    if (ui->result_window->text() == "0" || ui->result_window->text() == "Calculation Error")
     {
         new_result_window = button->text();
     }
@@ -60,112 +59,50 @@ void MainWindow::click_numbers()
     ui->result_window->setText(new_result_window);
 }
 
-void MainWindow::click_delete()
+void MainWindow::on_pushButton_delete_all_clicked() 
 {
-    QPushButton *button = (QPushButton *)sender();
-    if (button->text() == "C")
-    {
-        ui->result_window->setText("0");
-    }
+    ui->result_window->setText("0");
+}
 
-    if (button->text() == "<-")
+void MainWindow::on_pushButton_delete_1_clicked() 
+{
+    QString window = ui->result_window->text();
+    if (window.length() > 1)
     {
-        if (ui->result_window->text().length() > 1)
+        do {
+            window = window.chopped(1);
+        } while (window.last(1) != "(" && window.last(1) != " " && window.length() > 1);
+
+        if (window.last(1) == " ")
         {
-            QString new_window = ui->result_window->text();
-            if (new_window.last(1) == "(")
-            {
-                new_window = ui->result_window->text().chopped(1);
-                while (new_window.last(1) != "(" && new_window.last(1) != " ")
-                {
-                    if (new_window.length() == 1)
-                    {
-                        new_window = "0";
-                        break;
-                    }
-                    else
-                    {
-                        new_window = new_window.chopped(1);
-                    }
-                }
-                if (new_window.last(1) == " ")
-                {
-                    new_window = new_window.chopped(1);
-                }
-                ui->result_window->setText(new_window);
-            }
-            else
-            {
-                new_window = new_window.chopped(1);
-                if (new_window.last(1) == " ")
-                {
-                   new_window = new_window.chopped(1);
-                }
-                ui->result_window->setText(new_window);
-            }
-        }
-        else if (ui->result_window->text().length() == 1)
-        {
-            ui->result_window->setText("0");
+            window = window.chopped(1);
         }
     }
+    if (window.length() == 1 || window == "Calculation Error")
+    {
+        window = "0";
+    }
+    ui->result_window->setText(window);
 }
 
 void MainWindow::on_pushButton_dot_clicked()
 {
-    ui->result_window->setText(ui->result_window->text() + ".");
-}
-
-void MainWindow::click_plus_minus_mult_divide()
-{
-    QString new_result_window;
-    QPushButton *button = (QPushButton *)sender();
-    new_result_window = " " + button->text() + " ";
-    ui->result_window->setText(ui->result_window->text() + new_result_window);
-}
-
-void MainWindow::click_bracket()
-{
-    QPushButton *button = (QPushButton *)sender();
-    if (button->text() == "(")
+    if (ui->result_window->text() == "Calculation Error")
     {
-        if (ui->result_window->text() == "0")
-        {
-           ui->result_window->setText(button->text());
-        }
-        else
-        {
-           ui->result_window->setText(ui->result_window->text() + button->text());
-        }
+        ui->result_window->setText(".");
     }
     else
     {
-        ui->result_window->setText(ui->result_window->text() + button->text());
+        ui->result_window->setText(ui->result_window->text() + ".");
     }
 }
 
-void MainWindow::on_pushButton_pow_clicked()
-{
-    if (ui->result_window->text().last(1) != "^")
-    {
-        ui->result_window->setText(ui->result_window->text() + "^");
-    }
-}
-
-void MainWindow::on_pushButton_mod_clicked()
+void MainWindow::click_operators()
 {
     QString new_result_window;
     QPushButton *button = (QPushButton *)sender();
     new_result_window = " " + button->text() + " ";
-    ui->result_window->setText(ui->result_window->text() + new_result_window);
-}
-
-void MainWindow::click_func()
-{
-    QString new_result_window;
-    QPushButton *button = (QPushButton *)sender();
-    new_result_window = button->text() + "(";
-    if (ui->result_window->text() == "0")
+    if (ui->result_window->text() == "Calculation Error")
     {
         ui->result_window->setText(new_result_window);
     }
@@ -175,24 +112,53 @@ void MainWindow::click_func()
     }
 }
 
-void MainWindow::on_pushButton_x_clicked()
+void MainWindow::click_bracket()
 {
     QPushButton *button = (QPushButton *)sender();
-    QString new_result_window;
-    if (ui->result_window->text() == "0")
+    if (ui->result_window->text() == "0" || ui->result_window->text() == "Calculation Error")
     {
-        new_result_window = button->text();
+        ui->result_window->setText(button->text());
     }
     else
     {
-        new_result_window = ui->result_window->text() + button->text();
+        ui->result_window->setText(ui->result_window->text() + button->text());
     }
-    ui->result_window->setText(new_result_window);
+
+}
+
+void MainWindow::on_pushButton_pow_clicked()
+{
+    if (ui->result_window->text().last(1) != "^")
+    {
+        if (ui->result_window->text() == "Calculation Error")
+        {
+            ui->result_window->setText("^");
+        }
+        else
+        {
+            ui->result_window->setText(ui->result_window->text() + "^");
+        }
+    }
+}
+
+void MainWindow::click_func()
+{
+    QString new_result_window;
+    QPushButton *button = (QPushButton *)sender();
+    new_result_window = button->text() + "(";
+    if (ui->result_window->text() == "0" || ui->result_window->text() == "Calculation Error")
+    {
+        ui->result_window->setText(new_result_window);
+    }
+    else
+    {
+        ui->result_window->setText(ui->result_window->text() + new_result_window);
+    }
 }
 
 void MainWindow::on_pushButton_unary_clicked()
 {
-    if (ui->result_window->text() == "0")
+    if (ui->result_window->text() == "0" || ui->result_window->text() == "Calculation Error")
     {
         ui->result_window->setText("-");
     }
@@ -204,6 +170,10 @@ void MainWindow::on_pushButton_unary_clicked()
 
 void MainWindow::on_pushButton_equal_clicked()
 {
+    if (ui->result_window->text() == "Calculation Error")
+    {
+        ui->result_window->setText("0");
+    }
     double result;
     QByteArray arr = ui->result_window->text().toLocal8Bit();
     char *str = arr.data();

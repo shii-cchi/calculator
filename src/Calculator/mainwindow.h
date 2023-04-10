@@ -24,14 +24,13 @@ private:
 
 private slots:
     void click_numbers();
-    void click_delete();
+    void on_pushButton_delete_all_clicked();
+    void on_pushButton_delete_1_clicked();
     void on_pushButton_dot_clicked();
-    void click_plus_minus_mult_divide();
+    void click_operators();
     void click_bracket();
     void on_pushButton_pow_clicked();
-    void on_pushButton_mod_clicked();
     void click_func();
-    void on_pushButton_x_clicked();
     void on_pushButton_unary_clicked();
     void on_pushButton_equal_clicked();
 };
