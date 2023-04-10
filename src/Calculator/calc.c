@@ -1,7 +1,7 @@
 #include "calc.h"
 
 // int main() {
-//     char str[LEN] = "log(20)";
+//     char str[LEN] = "-12 + 4";
 //     double result = calculate(str);
 //     printf("%f\n", result);
 //     return 0;
@@ -13,6 +13,7 @@ double calculate(char *str_input) {
         clear_lexeme(&reverse_polish[i]);
     }
     str_to_reverse_polish(str_input, reverse_polish);
+    output_arr(reverse_polish);
     double result = calculate_reverse_polish(reverse_polish);
     return result;
 }
@@ -90,16 +91,15 @@ double calc_func(double number, char function) {
 }
 
 double calc_unary_op(double number, char op) {
-    double result = 0;
     switch (op) {
         case '-':
-            result = -result;
+            number = -number;
             break;
         case '+':
         default:
             break;
         }
-    return result;
+    return number;
 }
 
 double calc_op(double number_1, double number_2, char op) {
