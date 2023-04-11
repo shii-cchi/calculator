@@ -5,6 +5,8 @@
 #include <QtCharts>
 #include <QSplineSeries>
 
+#include "graph.h"
+
 extern "C" {
     #include "calc.h"
 }
@@ -23,6 +25,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    Graph *graph_window;
 
 private slots:
     void click_numbers();

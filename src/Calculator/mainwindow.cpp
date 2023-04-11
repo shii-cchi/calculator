@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    graph_window = new Graph();
 
     connect(ui->pushButton_0,SIGNAL(clicked()),this,SLOT(click_numbers()));
     connect(ui->pushButton_1,SIGNAL(clicked()),this,SLOT(click_numbers()));
@@ -195,6 +196,28 @@ void MainWindow::on_pushButton_equal_clicked()
 
 void MainWindow::on_pushButton_graph_clicked() {
     QSplineSeries *series = new QSplineSeries();
+    QString tmp_str = ui->result_window->text();
+    for (int i = -100; i <= 100; i++)
+    {
+        tmp_str.replace('x', "(" + QString::number(i) + ")");
+        QByteArray arr = tmp_str.toLocal8Bit();
+        char *str = arr.data();
+        double result = 0;
+        calculate(str, &result);
+        series->append(i, result);
+    }
+
+    QChart *chart = new QChart();
+    chart->legend()->hide();
+    chart->addSeries(series);
+    chart->createDefaultAxes();
+    chart->setTitle("Graph");
+
+    QChartView *chartView = new *QChartView(chart);
+    chartView->setREnderHint(QPainter::Antialiasing);
+
+    graph_window->setCentralWidget(chartView);
+    graph_window->show();
 }
 
 
