@@ -84,10 +84,17 @@ int check_numbers(char *str_input) {
 
 int check_valid(lexeme *reverse_polish) {
     int status = 1;
-    int index = 0, unary = 0, operators = 0, functions = 0, numbers = 0;
+    int index = 0, unary = 0, operators = 0, numbers = 0, bracket_1 = 0, bracket_2 = 0;
     while (reverse_polish[index].type != UNDEFINED) {
         if (reverse_polish[index].type == NUMBER) {
             numbers++;
+        }
+        if (reverse_polish[index].type == BRACKET) {
+            if (reverse_polish[index].lexeme_kind == '(') {
+                bracket_1++;
+            } else {
+                bracket_2++;
+            }
         }
         if (reverse_polish[index].type == OPERATOR) {
             if (reverse_polish[index].unary == 1) {
@@ -98,7 +105,7 @@ int check_valid(lexeme *reverse_polish) {
         }
         index++;
     }
-    if (numbers < operators + 1 || unary > numbers) {
+    if (numbers < operators + 1 || unary > numbers || bracket_1 != bracket_2) {
         status = 0;
     }
     return status;

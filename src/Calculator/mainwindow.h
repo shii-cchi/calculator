@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtCharts>
+#include <QSplineSeries>
 
 extern "C" {
     #include "calc.h"
@@ -33,5 +35,6 @@ private slots:
     void click_func();
     void on_pushButton_unary_clicked();
     void on_pushButton_equal_clicked();
+    void on_pushButton_graph_clicked();
 };
 #endif // MAINWINDOW_H

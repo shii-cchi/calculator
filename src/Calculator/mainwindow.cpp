@@ -93,11 +93,11 @@ void MainWindow::on_pushButton_dot_clicked()
 {
     if (ui->result_window->text() == "Calculation Error")
     {
-        ui->result_window->setText(".");
+        ui->result_window->setText(",");
     }
     else
     {
-        ui->result_window->setText(ui->result_window->text() + ".");
+        ui->result_window->setText(ui->result_window->text() + ",");
     }
 }
 
@@ -178,20 +178,24 @@ void MainWindow::on_pushButton_equal_clicked()
     {
         ui->result_window->setText("0");
     }
-    double result;
-    QByteArray arr = ui->result_window->text().toLocal8Bit();
-    char *str = arr.data();
-    int status = calculate(str, &result);
-    if (status) {
-        ui->result_window->setText(QString::number(result));
-    } else {
-        ui->result_window->setText("Calculation Error");
+
+    if (ui->result_window->text().indexOf('x') == -1) {
+        double result = 0;
+        QByteArray arr = ui->result_window->text().toLocal8Bit();
+        char *str = arr.data();
+
+        int status = calculate(str, &result);
+        if (status) {
+            ui->result_window->setText(QString::number(result, 'f', 7));
+        } else {
+            ui->result_window->setText("Calculation Error");
+        }
     }
 }
 
-
-
-
+void MainWindow::on_pushButton_graph_clicked() {
+    QSplineSeries *series = new QSplineSeries();
+}
 
 
 

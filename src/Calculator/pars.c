@@ -41,14 +41,9 @@ int str_to_reverse_polish(char *str_input, lexeme *reverse_polish) {
         }
     }
     while (is_empty_stack(&queue) != 1) {
-        if (peek(&queue).type == FUNCTION || peek(&queue).type == BRACKET) {
-            status = 0;
-            break;
-        } else {
-            reverse_polish[index_output] = peek(&queue);
-            index_output++;
-            pop(&queue); 
-        }      
+        reverse_polish[index_output] = peek(&queue);
+        index_output++;
+        pop(&queue);
     }
     return status;
 }
