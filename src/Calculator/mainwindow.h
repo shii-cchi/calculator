@@ -5,7 +5,7 @@
 #include <QtCharts>
 #include <QSplineSeries>
 
-#include "graph.h"
+#include "test.h"
 
 extern "C" {
     #include "calc.h"

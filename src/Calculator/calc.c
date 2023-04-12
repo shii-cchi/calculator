@@ -17,7 +17,6 @@ int calculate(char *str_input, double *result) {
     if (check_str_valid(str_input)) {
         if (str_to_reverse_polish(str_input, reverse_polish)) {
             if (check_valid(reverse_polish)) {
-                output_arr(reverse_polish);
                 *result = calculate_reverse_polish(reverse_polish);
                 status = 1;
             }

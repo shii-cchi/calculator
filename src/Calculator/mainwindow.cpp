@@ -195,29 +195,39 @@ void MainWindow::on_pushButton_equal_clicked()
 }
 
 void MainWindow::on_pushButton_graph_clicked() {
-    QSplineSeries *series = new QSplineSeries();
-    QString tmp_str = ui->result_window->text();
-    for (int i = -100; i <= 100; i++)
+    if (ui->result_window->text().indexOf('x') != -1)
     {
-        tmp_str.replace('x', "(" + QString::number(i) + ")");
-        QByteArray arr = tmp_str.toLocal8Bit();
-        char *str = arr.data();
-        double result = 0;
-        calculate(str, &result);
-        series->append(i, result);
+        QSplineSeries *series = new QSplineSeries();
+        QString tmp;
+        for (int i = -1000; i <= 1000; i+=10)
+        {
+            tmp = ui->result_window->text().replace('x', "(" + QString::number(i) + ")");
+            QByteArray arr = tmp.toLocal8Bit();
+            char *str = arr.data();
+            double res = 0;
+            int status = calculate(str, &res);
+            if (!status)
+            {
+                break;
+            }
+            if (res <= 1000000 && res >= -1000000)
+            {
+                series->append(i, res);
+            }
+        }
+
+        QChart *chart = new QChart();
+        chart->legend()->hide();
+        chart->addSeries(series);
+        chart->createDefaultAxes();
+        chart->setTitle("Graph");
+
+        QChartView *chartView = new QChartView(chart);
+        chartView->setRenderHint(QPainter::Antialiasing);
+
+        graph_window->setCentralWidget(chartView);
+        graph_window->show();
     }
-
-    QChart *chart = new QChart();
-    chart->legend()->hide();
-    chart->addSeries(series);
-    chart->createDefaultAxes();
-    chart->setTitle("Graph");
-
-    QChartView *chartView = new *QChartView(chart);
-    chartView->setREnderHint(QPainter::Antialiasing);
-
-    graph_window->setCentralWidget(chartView);
-    graph_window->show();
 }
 
 

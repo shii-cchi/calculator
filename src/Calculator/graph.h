@@ -2,12 +2,10 @@
 #define GRAPH_H
 
 #include <QMainWindow>
-#include <QtCharts>
-#include <QSplineSeries>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class Graph; }
-QT_END_NAMESPACE
+namespace Ui {
+class Graph;
+}
 
 class Graph : public QMainWindow
 {
@@ -16,9 +14,6 @@ class Graph : public QMainWindow
 public:
     explicit Graph(QWidget *parent = nullptr);
     ~Graph();
-
-signals:
-    void firstWindow();
 
 private:
     Ui::Graph *ui;
