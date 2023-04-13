@@ -199,7 +199,7 @@ void MainWindow::on_pushButton_graph_clicked() {
     {
         QSplineSeries *series = new QSplineSeries();
         QString tmp;
-        for (int i = -1000; i <= 1000; i+=10)
+        for (int i = -10; i <= 10; i+=1)
         {
             tmp = ui->result_window->text().replace('x', "(" + QString::number(i) + ")");
             QByteArray arr = tmp.toLocal8Bit();
@@ -210,16 +210,24 @@ void MainWindow::on_pushButton_graph_clicked() {
             {
                 break;
             }
-            if (res <= 1000000 && res >= -1000000)
-            {
+          //  if (res <= 1000000 && res >= -1000000)
+         //   {
+                printf("%d %f\n", i, res);
                 series->append(i, res);
-            }
+         //   }
         }
 
         QChart *chart = new QChart();
         chart->legend()->hide();
+        QValueAxis *axis_X = new QValueAxis;
+        QValueAxis *axis_Y = new QValueAxis;
+        axis_X->setRange(-10, 10);
+        axis_Y->setRange(-100, 100);
+
+        chart->addAxis(axis_X, Qt::AlignBottom);
+        chart->addAxis(axis_Y, Qt::AlignLeft);
         chart->addSeries(series);
-        chart->createDefaultAxes();
+
         chart->setTitle("Graph");
 
         QChartView *chartView = new QChartView(chart);
