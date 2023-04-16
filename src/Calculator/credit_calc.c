@@ -29,6 +29,7 @@ credit_t clear(credit_t *credit) {
 }
 
 void calc(credit_t *credit) {
+    credit->term = credit->term * 12;
     credit->percent = credit->percent / (12.0 * 100);
     if (credit->type == 'a') {
         credit->max_payment = credit->sum * (credit->percent + credit->percent / (pow(1 + credit->percent, credit->term) - 1));
@@ -36,7 +37,7 @@ void calc(credit_t *credit) {
         credit->overpayment = credit->total_sum - credit->sum;
     } else if (credit->type == 'd') {
         double sum = credit->sum;
-        double pay_without_percent = credit->sum / 120;
+        double pay_without_percent = credit->sum / credit->term;
         credit->max_payment = credit->sum * credit->percent + pay_without_percent;
         while (sum > 0.1) {
             credit->total_sum += pay_without_percent + sum * credit->percent;
