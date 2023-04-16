@@ -6,9 +6,6 @@ Credit::Credit(QWidget *parent) :
     ui(new Ui::Credit)
 {
     ui->setupUi(this);
-
-    ui->credit_term_type->addItem("лет");
-    ui->credit_term_type->addItem("месяцев");
 }
 
 Credit::~Credit()
@@ -30,7 +27,7 @@ void Credit::on_run_count_clicked()
             credit_type = "d";
         }
 
-        QString credit_data = ui->credit_sum->text() + " " + ui->credit_term->text() + " " + ui->credit_percent->text() + credit_type;
+        QString credit_data = ui->credit_sum->text() + " " + ui->credit_term->text() + " " + ui->credit_percent->text() + " " + credit_type;
         QByteArray arr = credit_data.toLocal8Bit();
         char *str = arr.data();
         double max_payment = 0, min_payment = 0, overpayment = 0, total_sum = 0;
@@ -39,18 +36,21 @@ void Credit::on_run_count_clicked()
         {
             if (credit_type == "a")
             {
-                ui->payment->setText(QString::number(max_payment));
+                ui->payment_2->setText(QString::number(max_payment));
             }
             else
             {
-                ui->payment->setText(QString::number(max_payment) + "..." + QString::number(min_payment));
+                ui->payment_2->setText(QString::number(max_payment) + "..." + QString::number(min_payment));
             }
-            ui->overpayment->setText(QString::number(overpayment));
-            ui->total_sum->setText(QString::number(total_sum));
+            ui->payment_1->setText("Ежемесячный платеж: ");
+            ui->overpayment_1->setText("Переплата по кредиту: ");
+            ui->total_sum_1->setText("Общая выплата: ");
+            ui->overpayment_2->setText(QString::number(overpayment));
+            ui->total_sum_2->setText(QString::number(total_sum));
         }
         else
         {
-            ui->payment->setText("Error");
+            ui->payment_1->setText("Error");
         }
     }
 }
