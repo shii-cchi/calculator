@@ -36,17 +36,17 @@ void Credit::on_run_count_clicked()
         {
             if (credit_type == "a")
             {
-                ui->payment_2->setText(QString::number(max_payment));
+                ui->payment_2->setText(QString::number(max_payment, 'f', 1));
             }
             else
             {
-                ui->payment_2->setText(QString::number(max_payment) + "..." + QString::number(min_payment));
+                ui->payment_2->setText(QString::number(max_payment, 'f', 1) + "..." + QString::number(min_payment, 'f', 1));
             }
             ui->payment_1->setText("Ежемесячный платеж: ");
             ui->overpayment_1->setText("Переплата по кредиту: ");
             ui->total_sum_1->setText("Общая выплата: ");
-            ui->overpayment_2->setText(QString::number(overpayment));
-            ui->total_sum_2->setText(QString::number(total_sum));
+            ui->overpayment_2->setText(QString::number(overpayment, 'f', 1));
+            ui->total_sum_2->setText(QString::number(total_sum, 'f', 1));
         }
         else
         {
