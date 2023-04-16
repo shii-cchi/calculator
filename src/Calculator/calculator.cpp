@@ -1,5 +1,5 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "calculator.h"
+#include "ui_calculator.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     graph_window = new Graph();
+    credit_window = new Credit();
 
     connect(ui->pushButton_0,SIGNAL(clicked()),this,SLOT(click_numbers()));
     connect(ui->pushButton_1,SIGNAL(clicked()),this,SLOT(click_numbers()));
@@ -238,8 +239,8 @@ void MainWindow::on_pushButton_graph_clicked() {
     }
 }
 
-
-
-
-
+void MainWindow::on_pushButton_credit_clicked()
+{
+    credit_window->show();
+}
 

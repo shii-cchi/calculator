@@ -1,12 +1,13 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef CALCULATOR_H
+#define CALCULATOR_H
 
 #include <QMainWindow>
 #include <QtCharts>
 #include <QSplineSeries>
 #include <QValueAxis>
 
-#include "test.h"
+#include "graph.h"
+#include "credit.h"
 
 extern "C" {
     #include "calc.h"
@@ -27,6 +28,7 @@ public:
 private:
     Ui::MainWindow *ui;
     Graph *graph_window;
+    Credit *credit_window;
 
 private slots:
     void click_numbers();
@@ -40,5 +42,6 @@ private slots:
     void on_pushButton_unary_clicked();
     void on_pushButton_equal_clicked();
     void on_pushButton_graph_clicked();
+    void on_pushButton_credit_clicked();
 };
-#endif // MAINWINDOW_H
+#endif // CALCULATOR_H
