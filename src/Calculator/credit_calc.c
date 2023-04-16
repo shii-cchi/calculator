@@ -1,14 +1,20 @@
 #include "credit_calc.h"
 
-void credit_calculate(const char *credit_data, char *result) {
+int credit_calculate(char *credit_data, double *max_payment, double *min_payment, double *overpayment, double *total_sum) {
+    int status = 1;
     credit_t credit;
     clear(&credit);
     int count_assign = sscanf(credit_data, "%lf%d%lf %c", &credit.sum, &credit.term, &credit.percent, &credit.type);
     if (count_assign > 0) {
         calc(&credit);
+        *max_payment = credit.max_payment;
+        *min_payment = credit.min_payment;
+        *overpayment = credit.overpayment;
+        *total_sum = credit.total_sum;
     } else {
-        fprintf(stderr, "Error data\n");
+        status = 0;
     }
+    return status;
 }
 
 credit_t clear(credit_t *credit) {
