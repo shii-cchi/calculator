@@ -13,6 +13,8 @@ extern "C" {
     #include "calc.h"
 }
 
+#define MAX_Y 100000000
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE

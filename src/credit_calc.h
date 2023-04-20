@@ -17,6 +17,6 @@ typedef struct credit_data {
 } credit_t;
 
 int credit_calculate(char *credit_data, double *max_payment, double *min_payment, double *overpayment, double *total_sum);
-credit_t clear(credit_t *credit);
+void clear(credit_t *credit);
 void calc(credit_t *credit);
 

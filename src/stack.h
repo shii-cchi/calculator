@@ -15,7 +15,6 @@ typedef struct lexemes {
     enum lexeme_type type;
     char lexeme_kind;  // mod - m, cos - c, sin - s, tan - t, acos - C, asin - S, atan - T, sqrt - Q, log - l, ln - L
     double number;
-    int sign;
     int unary;
 } lexeme;
 
@@ -30,8 +29,8 @@ int is_full_stack(stack *operators);
 void push(stack *operators, lexeme *new_item);
 void pop(stack *operators);
 lexeme peek(stack *operators);
-void output_stack(stack *operators);
-void output_arr(lexeme *arr);
+// void output_stack(stack *operators);
+// void output_arr(lexeme *arr);
 void clear_lexeme(lexeme *lex);
 
 #endif  // SRC_STACK_H_

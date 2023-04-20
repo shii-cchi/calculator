@@ -1,13 +1,13 @@
 #include "pars.h"
 
-int str_to_reverse_polish(char *str_input, lexeme *reverse_polish) {
+void str_to_reverse_polish(char *str_input, lexeme *reverse_polish) {
     stack queue;
     stack_init(&queue);
     lexeme lex;
     int length_input = (int)strlen(str_input);
-    int index_input = 0, index_output = 0, status = 1;
+    int index_input = 0, index_output = 0;
     while (index_input < length_input) {
-        index_input = define_lex(str_input, &lex, index_input, &status);
+        index_input = define_lex(str_input, &lex, index_input);
         if (lex.type == NUMBER) {
             reverse_polish[index_output] = lex;
             index_output++;
@@ -21,7 +21,6 @@ int str_to_reverse_polish(char *str_input, lexeme *reverse_polish) {
                 index_output++;
                 pop(&queue);
                 if (is_empty_stack(&queue)) {
-                    fprintf(stderr, "Error\n");
                     break;
                 }
             }
@@ -45,38 +44,33 @@ int str_to_reverse_polish(char *str_input, lexeme *reverse_polish) {
         index_output++;
         pop(&queue);
     }
-    return status;
 }
 
-int define_lex(char *str_input, lexeme *lex, int index_input, int *status) {
+int define_lex(char *str_input, lexeme *lex, int index_input) {
     clear_lexeme(lex);
     char lex_kind = 0;
     double number = 0;
-    int sign = 1;
-    if (lex_kind = is_operator(str_input, &index_input)) {
+    if ((lex_kind = is_operator(str_input, &index_input))) {
         lex->type = OPERATOR;
         lex->lexeme_kind = lex_kind;
         if (strchr("+-", lex_kind) && (str_input[index_input] == 'x' || isdigit(str_input[index_input]))) {
             lex->unary = 1;
         }
-    } else if (lex_kind = is_func(str_input, &index_input)) {
+    } else if ((lex_kind = is_func(str_input, &index_input))) {
         lex->type = FUNCTION;
         lex->lexeme_kind = lex_kind;
-    } else if (lex_kind = is_bracket(str_input, &index_input)) {
+    } else if ((lex_kind = is_bracket(str_input, &index_input))) {
         lex->type = BRACKET;
         lex->lexeme_kind = lex_kind;
-    } else if (lex_kind = is_num(str_input, &index_input, &number, &sign)) {
+    } else if ((lex_kind = is_num(str_input, &index_input, &number))) {
         lex->type = NUMBER;
         lex->lexeme_kind = lex_kind;
         lex->number = number;
-        lex->sign = sign;
-    } else {
-        *status = 0;
     }
     return index_input;
 }
 
-char is_num(char *str_input, int *index_input, double *number, int *sign) {
+char is_num(char *str_input, int *index_input, double *number) {
     char status = 0;
     int count_symbol = 0;
     char new_str[LEN] = {0};
@@ -88,12 +82,6 @@ char is_num(char *str_input, int *index_input, double *number, int *sign) {
         if (str_input[*index_input] == 'x') {
             status = 'x';
             *index_input += 1;
-        } else if ((str_input[*index_input] == '-' || str_input[*index_input] == '+') && str_input[*index_input + 1] == 'x') {
-            if (str_input[*index_input] == '-') {
-                *sign = -1;
-            }
-            status = 'x';
-            *index_input += 2;
         }
     }
     return status;

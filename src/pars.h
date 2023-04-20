@@ -3,9 +3,9 @@
 
 #include "stack.h"
 
-int str_to_reverse_polish(char *str_input, lexeme *reverse_polish);
-int define_lex(char *str_input, lexeme *lex, int index_input, int *status);
-char is_num(char *str_input, int *index_input, double *number, int *sign);
+void str_to_reverse_polish(char *str_input, lexeme *reverse_polish);
+int define_lex(char *str_input, lexeme *lex, int index_input);
+char is_num(char *str_input, int *index_input, double *number);
 char is_operator(char *str_input, int *index_input);
 char is_func(char *str_input, int *index_input);
 char is_bracket(char *str_input, int *index_input);

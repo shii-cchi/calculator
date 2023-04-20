@@ -15,11 +15,10 @@ int calculate(char *str_input, double *result) {
         clear_lexeme(&reverse_polish[i]);
     }
     if (check_str_valid(str_input)) {
-        if (str_to_reverse_polish(str_input, reverse_polish)) {
-            if (check_valid(reverse_polish)) {
-                *result = calculate_reverse_polish(reverse_polish);
-                status = 1;
-            }
+        str_to_reverse_polish(str_input, reverse_polish);
+        if (check_valid(reverse_polish)) {
+            *result = calculate_reverse_polish(reverse_polish);
+            status = 1;
         }
     }
     return status;
@@ -47,7 +46,7 @@ int check_dot_x(char *str_input) {
                     status = 0;
                 }
             } else {
-                if (!isdigit(str_input[i - 1]) && !isdigit(str_input[i + 1])) {
+                if (!isdigit(str_input[i - 1]) || !isdigit(str_input[i + 1])) {
                     status = 0;
                 }
             }
@@ -89,11 +88,7 @@ int check_valid(lexeme *reverse_polish) {
             numbers++;
         }
         if (reverse_polish[index].type == BRACKET) {
-            if (reverse_polish[index].lexeme_kind == '(') {
-                bracket_1++;
-            } else {
-                bracket_2++;
-            }
+            bracket_1++;
         }
         if (reverse_polish[index].type == OPERATOR) {
             if (reverse_polish[index].unary == 1) {

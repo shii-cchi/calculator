@@ -17,7 +17,7 @@ int credit_calculate(char *credit_data, double *max_payment, double *min_payment
     return status;
 }
 
-credit_t clear(credit_t *credit) {
+void clear(credit_t *credit) {
     credit->sum = 0;
     credit->percent = 0;
     credit->term = 0;

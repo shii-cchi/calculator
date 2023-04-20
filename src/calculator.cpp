@@ -220,11 +220,10 @@ QSplineSeries* MainWindow::get_series()
         double res = 0;
         calculate(str_without_x, &res);
 
-        if (res >= -100000000 && res <= 100000000)
+        if (res >= -MAX_Y && res <= MAX_Y)
         {
             series->append(i, res);
         }
     }
     return series;
 }
-
