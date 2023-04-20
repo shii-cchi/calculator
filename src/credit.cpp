@@ -15,6 +15,13 @@ Credit::~Credit()
 
 void Credit::on_run_count_clicked()
 {
+    ui->payment_1->setText("");
+    ui->overpayment_1->setText("");
+    ui->total_sum_1->setText("");
+    ui->payment_2->setText("");
+    ui->overpayment_2->setText("");
+    ui->total_sum_2->setText("");
+
     if (!ui->credit_sum->text().isEmpty() && !ui->credit_term->text().isEmpty() && !ui->credit_percent->text().isEmpty() && (ui->credit_type_1->isChecked() || ui->credit_type_2->isChecked()))
     {
         QString credit_type;
@@ -50,8 +57,12 @@ void Credit::on_run_count_clicked()
         }
         else
         {
-            ui->payment_1->setText("Error");
+            ui->payment_1->setText("Error data");
         }
+    }
+    else
+    {
+        ui->payment_1->setText("Fill out each field");
     }
 }
 

@@ -200,42 +200,54 @@ void MainWindow::on_pushButton_graph_clicked() {
     {
         QSplineSeries *series = new QSplineSeries();
         QString tmp;
-        for (int i = -10; i <= 10; i+=1)
+        int status;
+
+        tmp = ui->result_window->text();
+        QByteArray arr = tmp.toLocal8Bit();
+        char *str = arr.data();
+        double res = 0;
+        status = calculate(str, &res);
+        if (!status)
         {
-            tmp = ui->result_window->text().replace('x', "(" + QString::number(i) + ")");
-            QByteArray arr = tmp.toLocal8Bit();
-            char *str = arr.data();
-            double res = 0;
-            int status = calculate(str, &res);
-            if (!status)
+            ui->result_window->setText("Calculation Error");
+        }
+
+        if (status)
+        {
+            for (int i = -1000; i <= 1000; i+=1)
             {
-                break;
+                tmp = ui->result_window->text().replace('x', "(" + QString::number(i) + ")");
+                QByteArray arr = tmp.toLocal8Bit();
+                char *str = arr.data();
+                double res = 0;
+                status = calculate(str, &res);
+                if (!status)
+                {
+                    ui->result_window->setText("Calculation Error");
+                    break;
+                }
+                if (res >= -100000000 && res <= 100000000)
+                {
+                    series->append(i, res);
+                }
             }
-          //  if (res <= 1000000 && res >= -1000000)
-         //   {
-                printf("%d %f\n", i, res);
-                series->append(i, res);
-         //   }
         }
 
         QChart *chart = new QChart();
         chart->legend()->hide();
-        QValueAxis *axis_X = new QValueAxis;
-        QValueAxis *axis_Y = new QValueAxis;
-        axis_X->setRange(-10, 10);
-        axis_Y->setRange(-100, 100);
-
-        chart->addAxis(axis_X, Qt::AlignBottom);
-        chart->addAxis(axis_Y, Qt::AlignLeft);
         chart->addSeries(series);
-
+        chart->createDefaultAxes();
         chart->setTitle("Graph");
 
         QChartView *chartView = new QChartView(chart);
         chartView->setRenderHint(QPainter::Antialiasing);
 
         graph_window->setCentralWidget(chartView);
-        graph_window->show();
+
+        if (status)
+        {
+            graph_window->show();
+        }
     }
 }
 
