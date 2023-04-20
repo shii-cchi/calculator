@@ -24,6 +24,11 @@ private slots:
 
 private:
     Ui::Credit *ui;
+
+    void clear();
+    QString get_credit_type();
+    char *qstring_to_char(QString qstr);
+    int fields_is_empty();
 };
 
 #endif // CREDIT_H
