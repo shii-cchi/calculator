@@ -30,6 +30,11 @@ private:
     Graph *graph_window;
     Credit *credit_window;
 
+    int check_valid_data();
+    char *qstring_to_char(QString qstr);
+    QSplineSeries *get_series();
+    QString get_new_window(QString button_text, int flag);
+
 private slots:
     void click_numbers();
     void on_pushButton_delete_all_clicked();
