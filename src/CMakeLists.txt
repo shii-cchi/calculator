@@ -13,8 +13,8 @@ set(CMAKE_AUTOUIC ON)
 #     set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # endif()
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt5 COMPONENTS Charts REQUIRED)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Charts REQUIRED)
 
 add_executable(Calculator
     calculator.cpp
@@ -30,5 +30,5 @@ add_executable(Calculator
     graph.ui
 )
 
-target_link_libraries(Calculator Qt5::Widgets)
-target_link_libraries(Calculator Qt5::Charts)
+target_link_libraries(Calculator Qt6::Widgets Qt6::Core)
+target_link_libraries(Calculator Qt6::Charts Qt6::Core)
