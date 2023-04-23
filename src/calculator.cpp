@@ -67,14 +67,14 @@ void MainWindow::on_pushButton_delete_1_clicked()
     }
     if (window.length() > 1)
     {
-        do {
-            window = window.chopped(1);
-        } while (window.last(1) != "(" && window.last(1) != " " && window.length() > 1);
+        // do {
+        //     window = window.chopped(1);
+        // } while (window.last(1) != "(" && window.last(1) != " " && window.length() > 1);
 
-        if (window.last(1) == " ")
-        {
-            window = window.chopped(1);
-        }
+        // if (window.last(1) == " ")
+        // {
+        //     window = window.chopped(1);
+        // }
     }
     if (window.length() == 1)
     {
@@ -105,11 +105,11 @@ void MainWindow::click_bracket()
 
 void MainWindow::on_pushButton_pow_clicked()
 {
-    if (ui->result_window->text().last(1) != "^")
-    {
+  //  if (ui->result_window->text().last(1) != "^")
+  //  {
         QString button_text = "^";
         ui->result_window->setText(get_new_window(button_text, 1));
-    }
+   // }
 }
 
 void MainWindow::click_func()

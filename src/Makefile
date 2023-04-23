@@ -16,9 +16,14 @@ OBJECTS_2 = test.o
 
 all: clean
 
-# install:
+install: clean
+	rm -rf calculator
+	mkdir calculator
+	cd calculator; cmake ../
+	cd calculator; make
 
-# uninstall:
+uninstall: 
+	rm -R calculator
 
 # dvi:
 
