@@ -32,9 +32,9 @@ private:
     Graph *graph_window;
     Credit *credit_window;
 
-    int check_valid_data();
+    int check_valid_data(QString data);
     char *qstring_to_char(QString qstr);
-    QSplineSeries *get_series();
+    QSplineSeries *get_series(QString data);
     QString get_new_window(QString button_text, int flag);
 
 private slots:

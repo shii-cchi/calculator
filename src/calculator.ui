@@ -619,25 +619,6 @@ background-color: white;</string>
      <string>&lt;-</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_deposit">
-    <property name="geometry">
-     <rect>
-      <x>71</x>
-      <y>266</y>
-      <width>70</width>
-      <height>40</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-	color: white;
-	background-color: rgb(53, 132, 228);
-}</string>
-    </property>
-    <property name="text">
-     <string>deposit</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_graph">
     <property name="geometry">
      <rect>
@@ -661,7 +642,7 @@ background-color: white;</string>
      <rect>
       <x>0</x>
       <y>266</y>
-      <width>70</width>
+      <width>141</width>
       <height>40</height>
      </rect>
     </property>

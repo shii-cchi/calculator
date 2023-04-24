@@ -61,20 +61,20 @@ void MainWindow::on_pushButton_delete_all_clicked()
 void MainWindow::on_pushButton_delete_1_clicked() 
 {
     QString window = ui->result_window->text();
-    if (window == "Calculation Error")
+    if (window == "Ошибка ввода")
     {
         window = "0";
     }
     if (window.length() > 1)
     {
-        // do {
-        //     window = window.chopped(1);
-        // } while (window.last(1) != "(" && window.last(1) != " " && window.length() > 1);
+         do {
+             window = window.chopped(1);
+         } while (window.last(1) != "(" && window.last(1) != " " && window.length() > 1);
 
-        // if (window.last(1) == " ")
-        // {
-        //     window = window.chopped(1);
-        // }
+         if (window.last(1) == " ")
+         {
+             window = window.chopped(1);
+         }
     }
     if (window.length() == 1)
     {
@@ -85,7 +85,7 @@ void MainWindow::on_pushButton_delete_1_clicked()
 
 void MainWindow::on_pushButton_dot_clicked()
 {
-    QString button_text = ",";
+    QString button_text = ".";
     ui->result_window->setText(get_new_window(button_text, 1));
 }
 
@@ -105,11 +105,11 @@ void MainWindow::click_bracket()
 
 void MainWindow::on_pushButton_pow_clicked()
 {
-  //  if (ui->result_window->text().last(1) != "^")
-  //  {
+    if (ui->result_window->text().last(1) != "^")
+    {
         QString button_text = "^";
         ui->result_window->setText(get_new_window(button_text, 1));
-   // }
+    }
 }
 
 void MainWindow::click_func()
@@ -127,20 +127,25 @@ void MainWindow::on_pushButton_unary_clicked()
 
 void MainWindow::on_pushButton_equal_clicked()
 {
-    if (ui->result_window->text() == "Calculation Error")
+    if (ui->result_window->text() == "Ошибка ввода")
     {
         ui->result_window->setText("0");
     }
 
-    if (ui->result_window->text().indexOf('x') == -1) {
+    QString data = ui->result_window->text().replace(".", ",");
+
+    printf("%s\n", data.toLocal8Bit().data());
+    printf("%s\n", ui->result_window->text().toLocal8Bit().data());
+
+    if (data.indexOf('x') == -1) {
         double result = 0;
-        char *str_data = qstring_to_char(ui->result_window->text());
+        char *str_data = qstring_to_char(data);
 
         int status = calculate(str_data, &result);
         if (status) {
             ui->result_window->setText(QString::number(result, 'f', 7));
         } else {
-            ui->result_window->setText("Calculation Error");
+            ui->result_window->setText("Ошибка ввода");
         }
     }
 }
@@ -148,12 +153,14 @@ void MainWindow::on_pushButton_equal_clicked()
 void MainWindow::on_pushButton_graph_clicked() {
     if (ui->result_window->text().indexOf('x') != -1)
     {
-        int status = check_valid_data();
+        QString data = ui->result_window->text().replace(".", ",");
+
+        int status = check_valid_data(data);
         if (status)
         {
             QChart *chart = new QChart();
             chart->legend()->hide();
-            chart->addSeries(get_series());
+            chart->addSeries(get_series(data));
             chart->createDefaultAxes();
             chart->setTitle("Graph");
 
@@ -174,11 +181,11 @@ void MainWindow::on_pushButton_credit_clicked()
 QString MainWindow::get_new_window(QString button_text, int flag)
 {
     QString new_window;
-    if (flag == 2 && (ui->result_window->text() == "0" || ui->result_window->text() == "Calculation Error"))
+    if (flag == 2 && (ui->result_window->text() == "0" || ui->result_window->text() == "Ошибка ввода"))
     {
         new_window = button_text;
     }
-    else if (flag == 1 && ui->result_window->text() == "Calculation Error")
+    else if (flag == 1 && ui->result_window->text() == "Ошибка ввода")
     {
         new_window = button_text;
     }
@@ -189,14 +196,14 @@ QString MainWindow::get_new_window(QString button_text, int flag)
     return new_window;
 }
 
-int MainWindow::check_valid_data()
+int MainWindow::check_valid_data(QString data)
 {
-    char *str_x = qstring_to_char(ui->result_window->text());
+    char *str_x = qstring_to_char(data);
     double res = 0;
     int status = calculate(str_x, &res);
     if (!status)
     {
-        ui->result_window->setText("Calculation Error");
+        ui->result_window->setText("Ошибка ввода");
     }
     return status;
 }
@@ -208,14 +215,14 @@ char* MainWindow::qstring_to_char(QString qstr)
     return str;
 }
 
-QSplineSeries* MainWindow::get_series()
+QSplineSeries* MainWindow::get_series(QString data)
 {
     QSplineSeries *series = new QSplineSeries();
 
     for (int i = -1000; i <= 1000; i+=1)
     {
-        QString tmp = ui->result_window->text().replace('x', "(" + QString::number(i) + ")");
-        char *str_without_x = qstring_to_char(tmp);
+        QString tmp = data;
+        char *str_without_x = qstring_to_char(tmp.replace('x', "(" + QString::number(i) + ")"));
 
         double res = 0;
         calculate(str_without_x, &res);
