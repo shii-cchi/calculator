@@ -134,9 +134,6 @@ void MainWindow::on_pushButton_equal_clicked()
 
     QString data = ui->result_window->text().replace(".", ",");
 
-    printf("%s\n", data.toLocal8Bit().data());
-    printf("%s\n", ui->result_window->text().toLocal8Bit().data());
-
     if (data.indexOf('x') == -1) {
         double result = 0;
         char *str_data = qstring_to_char(data);

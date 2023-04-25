@@ -17,13 +17,17 @@ OBJECTS_2 = test.o
 all: clean
 
 install: clean
-	rm -rf calculator
+	-rm -rf Calculator
 	mkdir calculator
 	cd calculator; cmake ../
 	cd calculator; make
+	cd ..
+	mv calculator/Calculator .
+	rm -R calculator
+	/Calculator
 
 uninstall: 
-	rm -R calculator
+	-rm -rf Calculator
 
 # dvi:
 
