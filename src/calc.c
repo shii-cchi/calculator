@@ -1,13 +1,5 @@
 #include "calc.h"
 
-// int main() {
-//     char str[LEN] = "1 + 2 +";
-//     double result = 0;
-//     int status = calculate(str, &result);
-//     printf("%f\n%d\n", result, status);
-//     return 0;
-// }
-
 int calculate(char *str_input, double *result) {
     int status = 0;
     lexeme reverse_polish[LEN];
@@ -30,6 +22,9 @@ int check_str_valid(char *str_input) {
         status = 0;
     }
     if (!check_numbers(str_input)) {
+        status = 0;
+    }
+    if (!check_brackets(str_input)) {
         status = 0;
     }
     return status;
@@ -80,15 +75,36 @@ int check_numbers(char *str_input) {
     return status;
 }
 
+int check_brackets(char *str_input) {
+    int status = 1;
+    int bracket_1 = 0, bracket_2 = 0;
+    for (int i = 0; i < (int)strlen(str_input); i++) {
+        if (str_input[i] == '(') {
+            bracket_1++;
+            if (str_input[i + 1] == ')') {
+                status = 2;
+            }
+        }
+        if (str_input[i] == ')') {
+            bracket_2++;
+        }
+        if (bracket_2 > bracket_1 || status == 2) {
+            status = 0;
+            break;
+        }
+    }
+    if (bracket_1 != bracket_2) {
+        status = 0;
+    }
+    return status;
+}
+
 int check_valid(lexeme *reverse_polish) {
     int status = 1;
-    int index = 0, unary = 0, operators = 0, numbers = 0, bracket_1 = 0, bracket_2 = 0;
+    int index = 0, unary = 0, operators = 0, numbers = 0;
     while (reverse_polish[index].type != UNDEFINED) {
         if (reverse_polish[index].type == NUMBER) {
             numbers++;
-        }
-        if (reverse_polish[index].type == BRACKET) {
-            bracket_1++;
         }
         if (reverse_polish[index].type == OPERATOR) {
             if (reverse_polish[index].unary == 1) {
@@ -99,7 +115,7 @@ int check_valid(lexeme *reverse_polish) {
         }
         index++;
     }
-    if (numbers < operators + 1 || unary > numbers || bracket_1 != bracket_2) {
+    if (numbers < operators + 1 || unary > numbers || (numbers >= 2 && operators == 0)) {
         status = 0;
     }
     return status;
