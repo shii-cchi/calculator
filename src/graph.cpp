@@ -6,6 +6,7 @@ Graph::Graph(QWidget *parent) :
     ui(new Ui::Graph)
 {
     ui->setupUi(this);
+    this->setWindowTitle("График");
 }
 
 Graph::~Graph()

@@ -6,6 +6,7 @@ Credit::Credit(QWidget *parent) :
     ui(new Ui::Credit)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Кредитный калькулятор");
 }
 
 Credit::~Credit()

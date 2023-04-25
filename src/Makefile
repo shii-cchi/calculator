@@ -17,14 +17,13 @@ OBJECTS_2 = test.o
 all: clean
 
 install: clean
-	-rm -rf Calculator
 	mkdir calculator
 	cd calculator; cmake ../
 	cd calculator; make
 	cd ..
 	mv calculator/Calculator .
 	rm -R calculator
-	/Calculator
+	./Calculator
 
 uninstall: 
 	-rm -rf Calculator
@@ -59,4 +58,4 @@ gcov_report: clean tests
 
 clean:
 	-rm -rf *.o *.a *.out *.gcda *.gcno *.html *.css *.tar.gz
-	-rm -f tests
+	-rm -rf tests Calculator

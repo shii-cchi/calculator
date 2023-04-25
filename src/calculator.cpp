@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Калькулятор");
     graph_window = new Graph();
     credit_window = new Credit();
 
@@ -121,8 +122,11 @@ void MainWindow::click_func()
 
 void MainWindow::on_pushButton_unary_clicked()
 {
-    QString button_text = "-";
-    ui->result_window->setText(get_new_window(button_text, 2));
+    if (ui->result_window->text().last(1) == " " || ui->result_window->text().last(1) == "(" || ui->result_window->text().last(1) == "0")
+    {
+        QString button_text = "-";
+    	ui->result_window->setText(get_new_window(button_text, 2));
+    }
 }
 
 void MainWindow::on_pushButton_equal_clicked()
@@ -159,7 +163,6 @@ void MainWindow::on_pushButton_graph_clicked() {
             chart->legend()->hide();
             chart->addSeries(get_series(data));
             chart->createDefaultAxes();
-            chart->setTitle("Graph");
 
             QChartView *chartView = new QChartView(chart);
             chartView->setRenderHint(QPainter::Antialiasing);
@@ -215,8 +218,15 @@ char* MainWindow::qstring_to_char(QString qstr)
 QSplineSeries* MainWindow::get_series(QString data)
 {
     QSplineSeries *series = new QSplineSeries();
+    int min = -1000, max = 1000;
+    
+    if (data.indexOf("sin") != -1 || data.indexOf("cos") != -1)
+    {
+    	min = -100;
+    	max = 100;
+    }
 
-    for (int i = -1000; i <= 1000; i+=1)
+    for (int i = min; i <= max; i+=1)
     {
         QString tmp = data;
         char *str_without_x = qstring_to_char(tmp.replace('x', "(" + QString::number(i) + ")"));
