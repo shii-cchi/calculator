@@ -14,8 +14,10 @@ OBJECTS_1 = calc.o pars.o stack.o credit_calc.o
 SOURCES_2 = test/test.c
 OBJECTS_2 = test.o
 
+.PHONY: all
 all: clean
 
+.PHONY: install
 install: clean
 	mkdir calculator
 	cd calculator; cmake ../
@@ -25,13 +27,17 @@ install: clean
 	rm -R calculator
 	./Calculator
 
+.PHONY: uninstall
 uninstall: 
 	-rm -rf Calculator
 
-# dvi:
+dvi:
+	google-chrome docs.html
 
-dist: calc.a
-	tar -czvf calc.tar.gz calc.a
+.PHONY: dist
+dist: 
+	-rm -rf *.tar.gz
+	tar -czvf Calculator.tar.gz Calculator
 
 calc.a: clean
 	$(CC) $(CFLAGS) -c $(SOURCES_1)
@@ -45,17 +51,18 @@ test_calc.a: clean
 	ranlib calc.a
 	-rm -rf *.o
 
+.PHONY: tests
 tests: clean test_calc.a
 	$(CC) $(CFLAGS) -c $(SOURCES_2)
 	$(CC) $(CFLAGS) $(GCOV_FLAG_TEST) -o tests $(OBJECTS_2) calc.a $(TEST_FLAG)
 	-rm -rf *.o
 	./tests
 
+.PHONY: gcov_report
 gcov_report: clean tests
 	gcovr -r . --html-details -o report_calc.html
 
-# lcov: clean tests
-
+.PHONY: clean
 clean:
 	-rm -rf *.o *.a *.out *.gcda *.gcno *.html *.css *.tar.gz
 	-rm -rf tests Calculator
