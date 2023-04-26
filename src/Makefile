@@ -4,9 +4,14 @@ GCOV_FLAG = -fprofile-arcs -ftest-coverage -fPIC -O0
 GCOV_FLAG_TEST = --coverage
 TEST_FLAG = -lcheck
 LINUX_FLAG = -lm -lsubunit -lrt -lpthread
+OPEN = open
 
 ifeq ($(shell uname), Linux)
 	TEST_FLAG += $(LINUX_FLAG)
+endif
+
+ifeq ($(shell uname), Linux)
+	OPEN = firefox
 endif
 
 SOURCES_1 = calc.c pars.c stack.c credit_calc.c
@@ -32,7 +37,7 @@ uninstall:
 	-rm -rf Calculator
 
 dvi:
-	google-chrome docs.html
+	$(OPEN) docs.html
 
 .PHONY: dist
 dist: 
