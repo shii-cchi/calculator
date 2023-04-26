@@ -69,5 +69,5 @@ gcov_report: clean tests
 
 .PHONY: clean
 clean:
-	-rm -rf *.o *.a *.out *.gcda *.gcno *.html *.css *.tar.gz
+	-rm -rf *.o *.a *.out *.gcda *.gcno *.css *.tar.gz
 	-rm -rf tests Calculator
