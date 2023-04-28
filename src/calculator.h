@@ -8,6 +8,8 @@
 
 #include "graph.h"
 #include "credit.h"
+#include "set_custom_axis.h"
+class SetCustomAxis;
 
 extern "C" {
     #include "calc.h"
@@ -25,16 +27,17 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void plot_graph(int max_x, int min_x, int max_y, int min_y);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
     Graph *graph_window;
     Credit *credit_window;
-
+    SetCustomAxis *set_custom_axis;
     int check_valid_data(QString data);
     char *qstring_to_char(QString qstr);
-    QSplineSeries *get_series(QString data);
+    QSplineSeries *get_series(QString data, int max_x, int min_x, int max_y, int min_y);
     QString get_new_window(QString button_text, int flag);
 
 private slots:

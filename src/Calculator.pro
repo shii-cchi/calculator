@@ -17,6 +17,7 @@ SOURCES += \
     calc.c \
     pars.c \
     credit_calc.c \
+    set_custom_axis.cpp \
     stack.c
 
 HEADERS += \
@@ -26,11 +27,13 @@ HEADERS += \
     calc.h \
     pars.h \
     credit_calc.h \
+    set_custom_axis.h \
     stack.h
 
 FORMS += \
     calculator.ui \
     credit.ui \
+    set_custom_axis.ui \
     graph.ui
 
 # Default rules for deployment.

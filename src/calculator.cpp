@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("Калькулятор");
     graph_window = new Graph();
     credit_window = new Credit();
+    set_custom_axis = new SetCustomAxis(this);
+//    set_custom_axis->setMainWindow(this);
 
     connect(ui->pushButton_0,SIGNAL(clicked()),this,SLOT(click_numbers()));
     connect(ui->pushButton_1,SIGNAL(clicked()),this,SLOT(click_numbers()));
@@ -154,22 +156,9 @@ void MainWindow::on_pushButton_equal_clicked()
 void MainWindow::on_pushButton_graph_clicked() {
     if (ui->result_window->text().indexOf('x') != -1)
     {
-        QString data = ui->result_window->text().replace(".", ",");
-
-        int status = check_valid_data(data);
-        if (status)
-        {
-            QChart *chart = new QChart();
-            chart->legend()->hide();
-            chart->addSeries(get_series(data));
-            chart->createDefaultAxes();
-
-            QChartView *chartView = new QChartView(chart);
-            chartView->setRenderHint(QPainter::Antialiasing);
-
-            graph_window->setCentralWidget(chartView);
-            graph_window->show();
-        }
+        set_custom_axis->show();
+        int apply = 0;
+        //here is place for making set_axis window
     }
 }
 
@@ -215,7 +204,27 @@ char* MainWindow::qstring_to_char(QString qstr)
     return str;
 }
 
-QSplineSeries* MainWindow::get_series(QString data)
+void MainWindow::plot_graph(int max_x, int min_x, int max_y, int min_y)
+{
+    QString data = ui->result_window->text().replace(".", ",");
+
+    int status = check_valid_data(data);
+    if (status)
+    {
+        QChart *chart = new QChart();
+        chart->legend()->hide();
+        chart->addSeries(get_series(data, max_x, min_x, max_y, min_y));
+        chart->createDefaultAxes();
+
+        QChartView *chartView = new QChartView(chart);
+        chartView->setRenderHint(QPainter::Antialiasing);
+
+        graph_window->setCentralWidget(chartView);
+        graph_window->show();
+    }
+}
+
+QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x, int max_y, int min_y)
 {
     QSplineSeries *series = new QSplineSeries();
     int min = -1000, max = 1000;
