@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
     graph_window = new Graph();
     credit_window = new Credit();
     set_custom_axis = new SetCustomAxis(this);
-//    set_custom_axis->setMainWindow(this);
 
     connect(ui->pushButton_0,SIGNAL(clicked()),this,SLOT(click_numbers()));
     connect(ui->pushButton_1,SIGNAL(clicked()),this,SLOT(click_numbers()));
@@ -157,8 +156,6 @@ void MainWindow::on_pushButton_graph_clicked() {
     if (ui->result_window->text().indexOf('x') != -1)
     {
         set_custom_axis->show();
-        int apply = 0;
-        //here is place for making set_axis window
     }
 }
 
@@ -227,15 +224,23 @@ void MainWindow::plot_graph(int max_x, int min_x, int max_y, int min_y)
 QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x, int max_y, int min_y)
 {
     QSplineSeries *series = new QSplineSeries();
-    int min = -1000, max = 1000;
-    
-    if (data.indexOf("sin") != -1 || data.indexOf("cos") != -1)
+
+    int step = 1;
+
+    if (max_x - min_x >= 2000 && max_x - min_x <= 20000)
     {
-    	min = -100;
-    	max = 100;
+        step = 10;
+    }
+    else if (max_x - min_x > 20000 && max_x - min_x <= 200000)
+    {
+        step = 1000;
+    }
+    else
+    {
+        step = 10000;
     }
 
-    for (int i = min; i <= max; i+=1)
+    for (int i = min_x; i <= max_x; i+=step)
     {
         QString tmp = data;
         char *str_without_x = qstring_to_char(tmp.replace('x', "(" + QString::number(i) + ")"));
@@ -243,7 +248,7 @@ QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x, int ma
         double res = 0;
         calculate(str_without_x, &res);
 
-        if (res >= -MAX_Y && res <= MAX_Y)
+        if (res >= min_y && res <= max_y)
         {
             series->append(i, res);
         }

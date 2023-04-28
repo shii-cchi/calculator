@@ -5,6 +5,7 @@
 
 #include "calculator.h"
 #include "ui_calculator.h"
+
 class MainWindow;
 
 namespace Ui {
@@ -17,7 +18,6 @@ class SetCustomAxis : public QDialog
 
 public:
     explicit SetCustomAxis(MainWindow *parent = nullptr);
-//    void setMainWindow(MainWindow *mainWindow);
     ~SetCustomAxis();
 
 private slots:
@@ -25,8 +25,9 @@ private slots:
     void on_pushButton_cancel_clicked();
 
 private:
-//    MainWindow *mainWindow;
     Ui::SetCustomAxis *ui;
+
+    void set_default();
 };
 
 #endif // SET_CUSTOM_AXIS_H

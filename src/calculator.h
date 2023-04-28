@@ -9,13 +9,14 @@
 #include "graph.h"
 #include "credit.h"
 #include "set_custom_axis.h"
+
 class SetCustomAxis;
 
 extern "C" {
     #include "calc.h"
 }
 
-#define MAX_Y 100000000
+#define MAX_XY 1000000
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
