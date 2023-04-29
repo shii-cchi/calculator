@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("Калькулятор");
     graph_window = new Graph();
     credit_window = new Credit();
-    set_custom_axis = new SetCustomAxis(this);
+    custom_axis = new CustomAxis(this);
 
     connect(ui->pushButton_0,SIGNAL(clicked()),this,SLOT(click_numbers()));
     connect(ui->pushButton_1,SIGNAL(clicked()),this,SLOT(click_numbers()));
@@ -155,7 +155,7 @@ void MainWindow::on_pushButton_equal_clicked()
 void MainWindow::on_pushButton_graph_clicked() {
     if (ui->result_window->text().indexOf('x') != -1)
     {
-        set_custom_axis->show();
+        custom_axis->show();
     }
 }
 
@@ -201,7 +201,7 @@ char* MainWindow::qstring_to_char(QString qstr)
     return str;
 }
 
-void MainWindow::plot_graph(int max_x, int min_x, int max_y, int min_y)
+void MainWindow::plot_graph(int max_x, int min_x)
 {
     QString data = ui->result_window->text().replace(".", ",");
 
@@ -210,7 +210,7 @@ void MainWindow::plot_graph(int max_x, int min_x, int max_y, int min_y)
     {
         QChart *chart = new QChart();
         chart->legend()->hide();
-        chart->addSeries(get_series(data, max_x, min_x, max_y, min_y));
+        chart->addSeries(get_series(data, max_x, min_x));
         chart->createDefaultAxes();
 
         QChartView *chartView = new QChartView(chart);
@@ -221,7 +221,7 @@ void MainWindow::plot_graph(int max_x, int min_x, int max_y, int min_y)
     }
 }
 
-QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x, int max_y, int min_y)
+QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x)
 {
     QSplineSeries *series = new QSplineSeries();
 
@@ -235,7 +235,7 @@ QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x, int ma
     {
         step = 1000;
     }
-    else
+    else if (max_x - min_x > 200000)
     {
         step = 10000;
     }
@@ -248,10 +248,10 @@ QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x, int ma
         double res = 0;
         calculate(str_without_x, &res);
 
-        if (res >= min_y && res <= max_y)
-        {
+      //  if (res >= -MAX_XY && res <= MAX_XY)
+      //  {
             series->append(i, res);
-        }
+     //   }
     }
     return series;
 }
