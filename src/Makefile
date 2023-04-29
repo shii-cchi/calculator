@@ -11,7 +11,7 @@ ifeq ($(shell uname), Linux)
 endif
 
 ifeq ($(shell uname), Linux)
-	OPEN = firefox
+	OPEN = xdg-open
 endif
 
 SOURCES_1 = calc.c pars.c stack.c credit_calc.c
