@@ -210,8 +210,19 @@ void MainWindow::plot_graph(int max_x, int min_x)
     {
         QChart *chart = new QChart();
         chart->legend()->hide();
-        chart->addSeries(get_series(data, max_x, min_x));
-        chart->createDefaultAxes();
+
+        QSplineSeries *series = get_series(data, max_x, min_x);
+        chart->addSeries(series);
+
+        QValueAxis *axis_x = new QValueAxis;
+        QValueAxis *axis_y = new QValueAxis;
+        chart->addAxis(axis_x, Qt::AlignBottom);
+        chart->addAxis(axis_y, Qt::AlignLeft);
+        axis_x->setLabelFormat("%.5g");
+        axis_y->setLabelFormat("%.5g");
+
+        series->attachAxis(axis_x);
+        series->attachAxis(axis_y);
 
         QChartView *chartView = new QChartView(chart);
         chartView->setRenderHint(QPainter::Antialiasing);
@@ -248,10 +259,7 @@ QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x)
         double res = 0;
         calculate(str_without_x, &res);
 
-      //  if (res >= -MAX_XY && res <= MAX_XY)
-      //  {
-            series->append(i, res);
-     //   }
+        series->append(i, res);
     }
     return series;
 }
