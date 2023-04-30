@@ -53,7 +53,7 @@ int define_lex(char *str_input, lexeme *lex, int index_input) {
     if ((lex_kind = is_operator(str_input, &index_input))) {
         lex->type = OPERATOR;
         lex->lexeme_kind = lex_kind;
-        if (strchr("+-", lex_kind) && (str_input[index_input] == 'x' || isdigit(str_input[index_input]))) {
+        if (strchr("+-", lex_kind) && (str_input[index_input] == 'x' ||  isdigit(str_input[index_input]))) {
             lex->unary = 1;
         }
     } else if ((lex_kind = is_func(str_input, &index_input))) {

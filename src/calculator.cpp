@@ -155,7 +155,13 @@ void MainWindow::on_pushButton_equal_clicked()
 void MainWindow::on_pushButton_graph_clicked() {
     if (ui->result_window->text().indexOf('x') != -1)
     {
-        custom_axis->show();
+        QString data = ui->result_window->text().replace(".", ",");
+
+        int status = check_valid_data(data);
+        if (status)
+        {
+            custom_axis->show();
+        }
     }
 }
 
@@ -203,33 +209,37 @@ char* MainWindow::qstring_to_char(QString qstr)
 
 void MainWindow::plot_graph(int max_x, int min_x)
 {
+    QChart *chart = new QChart();
+    chart->legend()->hide();
+
     QString data = ui->result_window->text().replace(".", ",");
-
-    int status = check_valid_data(data);
-    if (status)
+    for (int i = 0; i < data.length(); i++)
     {
-        QChart *chart = new QChart();
-        chart->legend()->hide();
-
-        QSplineSeries *series = get_series(data, max_x, min_x);
-        chart->addSeries(series);
-
-        QValueAxis *axis_x = new QValueAxis;
-        QValueAxis *axis_y = new QValueAxis;
-        chart->addAxis(axis_x, Qt::AlignBottom);
-        chart->addAxis(axis_y, Qt::AlignLeft);
-        axis_x->setLabelFormat("%.5g");
-        axis_y->setLabelFormat("%.5g");
-
-        series->attachAxis(axis_x);
-        series->attachAxis(axis_y);
-
-        QChartView *chartView = new QChartView(chart);
-        chartView->setRenderHint(QPainter::Antialiasing);
-
-        graph_window->setCentralWidget(chartView);
-        graph_window->show();
+        if (data[i] == '-' && data[i + 1] != ' ')
+        {
+            data.replace(i, 1, "(-1) * ");
+            i += 7;
+        }
     }
+
+    QSplineSeries *series = get_series(data, max_x, min_x);
+    chart->addSeries(series);
+
+    QValueAxis *axis_x = new QValueAxis;
+    QValueAxis *axis_y = new QValueAxis;
+    chart->addAxis(axis_x, Qt::AlignBottom);
+    chart->addAxis(axis_y, Qt::AlignLeft);
+    axis_x->setLabelFormat("%.6g");
+    axis_y->setLabelFormat("%.6g");
+
+    series->attachAxis(axis_x);
+    series->attachAxis(axis_y);
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    graph_window->setCentralWidget(chartView);
+    graph_window->show();
 }
 
 QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x)
@@ -255,10 +265,8 @@ QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x)
     {
         QString tmp = data;
         char *str_without_x = qstring_to_char(tmp.replace('x', "(" + QString::number(i) + ")"));
-
         double res = 0;
         calculate(str_without_x, &res);
-
         series->append(i, res);
     }
     return series;
