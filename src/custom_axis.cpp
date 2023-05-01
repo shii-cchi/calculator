@@ -23,7 +23,7 @@ void CustomAxis::on_pushButton_apply_clicked()
     {
         qobject_cast<MainWindow*>(parent())->plot_graph(max_x, min_x);
 
-        //this->close();
+        this->close();
         set_default();
     }
     else

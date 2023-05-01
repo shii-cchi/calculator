@@ -155,6 +155,8 @@ void MainWindow::on_pushButton_equal_clicked()
 void MainWindow::on_pushButton_graph_clicked() {
     if (ui->result_window->text().indexOf('x') != -1)
     {
+        graph_window->close();
+
         QString data = ui->result_window->text().replace(".", ",");
 
         int status = check_valid_data(data);
@@ -212,15 +214,8 @@ void MainWindow::plot_graph(int max_x, int min_x)
     QChart *chart = new QChart();
     chart->legend()->hide();
 
-    QString data = ui->result_window->text().replace(".", ",");
-    for (int i = 0; i < data.length(); i++)
-    {
-        if (data[i] == '-' && data[i + 1] != ' ')
-        {
-            data.replace(i, 1, "(-1) * ");
-            i += 7;
-        }
-    }
+    QString data = replace_unary();
+
 
     QSplineSeries *series = get_series(data, max_x, min_x);
     chart->addSeries(series);
@@ -242,13 +237,42 @@ void MainWindow::plot_graph(int max_x, int min_x)
     graph_window->show();
 }
 
+QString MainWindow::replace_unary()
+{
+    QString tmp = ui->result_window->text().replace(".", ",");
+    for (int i = 0; i < tmp.length(); i++)
+    {
+        if (tmp[i] == '-' && tmp[i + 1] != ' ')
+        {
+            tmp.replace(i, 1, "(-1) * ");
+            i += 7;
+        }
+    }
+    return tmp;
+}
+
 QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x)
 {
     QSplineSeries *series = new QSplineSeries();
 
+    int step = get_step(max_x, min_x);
+
+    for (int i = min_x; i <= max_x; i+=step)
+    {
+        QString tmp = data;
+        char *str_without_x = qstring_to_char(tmp.replace('x', "(" + QString::number(i) + ")"));
+        double res = 0;
+        calculate(str_without_x, &res);
+        series->append(i, res);
+    }
+    return series;
+}
+
+int MainWindow::get_step(int max_x, int min_x)
+{
     int step = 1;
 
-    if (max_x - min_x >= 2000 && max_x - min_x <= 20000)
+    if (max_x - min_x > 2000 && max_x - min_x <= 20000)
     {
         step = 10;
     }
@@ -261,13 +285,5 @@ QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x)
         step = 10000;
     }
 
-    for (int i = min_x; i <= max_x; i+=step)
-    {
-        QString tmp = data;
-        char *str_without_x = qstring_to_char(tmp.replace('x', "(" + QString::number(i) + ")"));
-        double res = 0;
-        calculate(str_without_x, &res);
-        series->append(i, res);
-    }
-    return series;
+    return step;
 }

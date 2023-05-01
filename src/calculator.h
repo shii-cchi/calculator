@@ -38,8 +38,10 @@ private:
     CustomAxis *custom_axis;
     int check_valid_data(QString data);
     char *qstring_to_char(QString qstr);
+    QString replace_unary();
     QSplineSeries *get_series(QString data, int max_x, int min_x);
     QString get_new_window(QString button_text, int flag);
+    int get_step(int max_x, int min_x);
 
 private slots:
     void click_numbers();
