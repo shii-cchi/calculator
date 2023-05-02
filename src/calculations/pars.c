@@ -1,4 +1,4 @@
-#include "pars.h"
+#include "../headers/pars.h"
 
 void str_to_reverse_polish(char *str_input, lexeme *reverse_polish) {
     stack queue;

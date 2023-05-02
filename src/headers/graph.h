@@ -1,5 +1,5 @@
-#ifndef GRAPH_H
-#define GRAPH_H
+#ifndef SRC_HEADERS_GRAPH_H
+#define SRC_HEADERS_GRAPH_H
 
 #include <QMainWindow>
 
@@ -19,4 +19,4 @@ private:
     Ui::Graph *ui;
 };
 
-#endif // GRAPH_H
+#endif // SRC_HEADERS_GRAPH_H

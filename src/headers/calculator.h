@@ -1,5 +1,5 @@
-#ifndef CALCULATOR_H
-#define CALCULATOR_H
+#ifndef SRC_HEADERS_CALCULATOR_H
+#define SRC_HEADERS_CALCULATOR_H
 
 #include <QMainWindow>
 #include <QtCharts>
@@ -58,4 +58,4 @@ private slots:
     void on_pushButton_graph_clicked();
     void on_pushButton_credit_clicked();
 };
-#endif // CALCULATOR_H
+#endif // SRC_HEADERS_CALCULATOR_H

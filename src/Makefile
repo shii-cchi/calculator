@@ -14,7 +14,7 @@ ifeq ($(shell uname), Linux)
 	OPEN = xdg-open
 endif
 
-SOURCES_1 = calc.c pars.c stack.c credit_calc.c
+SOURCES_1 = calculations/calc.c calculations/pars.c calculations/stack.c calculations/credit_calc.c
 OBJECTS_1 = calc.o pars.o stack.o credit_calc.o
 SOURCES_2 = test/test.c
 OBJECTS_2 = test.o

@@ -1,4 +1,4 @@
-#include "credit.h"
+#include "../headers/credit.h"
 #include "ui_credit.h"
 
 Credit::Credit(QWidget *parent) :

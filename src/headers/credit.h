@@ -1,5 +1,5 @@
-#ifndef CREDIT_H
-#define CREDIT_H
+#ifndef SRC_HEADERS_CREDIT_H
+#define SRC_HEADERS_CREDIT_H
 
 #include <QMainWindow>
 
@@ -31,4 +31,4 @@ private:
     int fields_is_empty();
 };
 
-#endif // CREDIT_H
+#endif // SRC_HEADERS_CREDIT_H

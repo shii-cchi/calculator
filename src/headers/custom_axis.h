@@ -1,10 +1,9 @@
-#ifndef CUSTOM_AXIS_H
-#define CUSTOM_AXIS_H
+#ifndef SRC_HEADERS_CUSTOM_AXIS_H
+#define SRC_HEADERS_CUSTOM_AXIS_H
 
 #include <QDialog>
 
 #include "calculator.h"
-#include "ui_calculator.h"
 
 class MainWindow;
 
@@ -30,4 +29,4 @@ private:
     void set_default();
 };
 
-#endif // CUSTOM_AXIS_H
+#endif // SRC_HEADERS_CUSTOM_AXIS_H

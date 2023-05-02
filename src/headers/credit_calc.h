@@ -1,3 +1,6 @@
+#ifndef SRC_HEADERS_CREDIT_CALC_H
+#define SRC_HEADERS_CREDIT_CALC_H
+
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
@@ -20,3 +23,4 @@ int credit_calculate(char *credit_data, double *max_payment, double *min_payment
 void clear(credit_t *credit);
 void calc(credit_t *credit);
 
+#endif  // SRC_HEADERS_CREDIT_CALC_H

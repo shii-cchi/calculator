@@ -1,5 +1,5 @@
-#ifndef SRC_STACK_H_
-#define SRC_STACK_H_
+#ifndef SRC_HEADERS_STACK_H_
+#define SRC_HEADERS_STACK_H_
 
 #include <stdlib.h>
 #include <math.h>
@@ -33,4 +33,4 @@ lexeme peek(stack *operators);
 // void output_arr(lexeme *arr);
 void clear_lexeme(lexeme *lex);
 
-#endif  // SRC_STACK_H_
+#endif  // SRC_HEADERS_STACK_H_

@@ -1,5 +1,5 @@
-#ifndef SRC_PARS_H_
-#define SRC_PARS_H_
+#ifndef SRC_HEADERS_PARS_H_
+#define SRC_HEADERS_PARS_H_
 
 #include "stack.h"
 
@@ -12,4 +12,4 @@ char is_bracket(char *str_input, int *index_input);
 char *copy_str(const char *str_input, char *new_str, int index_input);
 int get_prior(lexeme lex);
 
-#endif  // SRC_PARS_H_
+#endif  // SRC_HEADERS_PARS_H_

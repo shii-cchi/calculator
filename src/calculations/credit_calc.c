@@ -1,4 +1,4 @@
-#include "credit_calc.h"
+#include "../headers/credit_calc.h"
 
 int credit_calculate(char *credit_data, double *max_payment, double *min_payment, double *overpayment, double *total_sum) {
     int status = 1, count_symb = 0;

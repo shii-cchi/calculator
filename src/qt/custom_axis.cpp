@@ -1,4 +1,4 @@
-#include "custom_axis.h"
+#include "../headers/custom_axis.h"
 #include "ui_custom_axis.h"
 
 CustomAxis::CustomAxis(MainWindow *parent) :

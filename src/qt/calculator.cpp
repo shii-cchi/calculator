@@ -1,4 +1,4 @@
-#include "calculator.h"
+#include "../headers/calculator.h"
 #include "ui_calculator.h"
 
 MainWindow::MainWindow(QWidget *parent)

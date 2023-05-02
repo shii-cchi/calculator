@@ -2,8 +2,8 @@
 
 //#include <stdlib.h>
 
-#include "../calc.h"
-#include "../credit_calc.h"
+#include "../headers/calc.h"
+#include "../headers/credit_calc.h"
 
 START_TEST(test_1) {
   double result = 0;

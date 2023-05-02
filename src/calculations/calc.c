@@ -1,4 +1,4 @@
-#include "calc.h"
+#include "../headers/calc.h"
 
 int calculate(char *str_input, double *result) {
     int status = 0;

@@ -1,4 +1,4 @@
-#include "stack.h"
+#include "../headers/stack.h"
 
 void stack_init(stack *operators) {  // инициализация пустого стека
     operators->top = -1;

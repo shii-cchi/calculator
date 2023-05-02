@@ -17,19 +17,27 @@ find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt6 COMPONENTS Charts REQUIRED)
 
 add_executable(Calculator
-    calculator.cpp
-    credit.cpp
-    graph.cpp
-    custom_axis.cpp
-    main.cpp
-    calc.c
-    pars.c
-    credit_calc.c
-    stack.c
-    calculator.ui
-    credit.ui
-    graph.ui
-    custom_axis.ui
+    qt/calculator.cpp
+    qt/credit.cpp
+    qt/graph.cpp
+    qt/custom_axis.cpp
+    qt/main.cpp
+    calculations/calc.c
+    calculations/pars.c
+    calculations/credit_calc.c
+    calculations/stack.c
+    qt/calculator.ui
+    qt/credit.ui
+    qt/graph.ui
+    qt/custom_axis.ui
+    headers/calculator.h
+    headers/credit.h
+    headers/graph.h
+    headers/custom_axis.h
+    headers/calc.h
+    headers/pars.h
+    headers/credit_calc.h
+    headers/stack.h
 )
 
 target_link_libraries(Calculator Qt6::Widgets Qt6::Core)
