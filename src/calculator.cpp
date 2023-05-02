@@ -259,13 +259,25 @@ QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x)
 
     for (int i = min_x; i <= max_x; i+=step)
     {
-        QString tmp = data;
-        char *str_without_x = qstring_to_char(tmp.replace('x', "(" + QString::number(i) + ")"));
-        double res = 0;
-        calculate(str_without_x, &res);
-        series->append(i, res);
+        series->append(i, get_result(data, i));
     }
+
+    if (step > 1)
+    {
+        series->append(1, get_result(data, 1));
+        series->append(-1, get_result(data, -1));
+    }
+
     return series;
+}
+
+double MainWindow::get_result(QString data, int i)
+{
+    QString tmp = data;
+    char *str_without_x = qstring_to_char(tmp.replace('x', "(" + QString::number(i) + ")"));
+    double res = 0;
+    calculate(str_without_x, &res);
+    return res;
 }
 
 int MainWindow::get_step(int max_x, int min_x)

@@ -41,6 +41,7 @@ private:
     QString replace_unary();
     QSplineSeries *get_series(QString data, int max_x, int min_x);
     QString get_new_window(QString button_text, int flag);
+    double get_result(QString data, int i);
     int get_step(int max_x, int min_x);
 
 private slots:
