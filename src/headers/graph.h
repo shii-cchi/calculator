@@ -7,16 +7,15 @@ namespace Ui {
 class Graph;
 }
 
-class Graph : public QMainWindow
-{
-    Q_OBJECT
+class Graph : public QMainWindow {
+  Q_OBJECT
 
-public:
-    explicit Graph(QWidget *parent = nullptr);
-    ~Graph();
+ public:
+  explicit Graph(QWidget *parent = nullptr);
+  ~Graph();
 
-private:
-    Ui::Graph *ui;
+ private:
+  Ui::Graph *ui;
 };
 
-#endif // SRC_HEADERS_GRAPH_H
+#endif  // SRC_HEADERS_GRAPH_H

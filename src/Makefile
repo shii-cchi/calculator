@@ -72,3 +72,7 @@ gcov_report: clean tests
 clean:
 	-rm -rf *.o *.a *.out *.gcda *.gcno *.css *.tar.gz *.html
 	-rm -rf tests Calculator
+	
+.PHONY: style
+style:
+	clang-format -n -style=Google calculations/*.c test/*.c qt/*.cpp headers/*.h

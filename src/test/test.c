@@ -104,7 +104,8 @@ END_TEST
 START_TEST(test_13) {
   char *credit_data = "500000 5 12 a";
   double max_payment = 0, min_payment = 0, overpayment = 0, total_sum = 0;
-  int status = credit_calculate(credit_data, &max_payment, &min_payment, &overpayment, &total_sum);
+  int status = credit_calculate(credit_data, &max_payment, &min_payment,
+                                &overpayment, &total_sum);
   ck_assert_double_eq_tol(max_payment, 11122, 1);
   ck_assert_double_eq_tol(min_payment, 0, 1e-1);
   ck_assert_double_eq_tol(overpayment, 167333, 1);
@@ -116,7 +117,8 @@ END_TEST
 START_TEST(test_14) {
   char *credit_data = "500000 5 12 d";
   double max_payment = 0, min_payment = 0, overpayment = 0, total_sum = 0;
-  int status = credit_calculate(credit_data, &max_payment, &min_payment, &overpayment, &total_sum);
+  int status = credit_calculate(credit_data, &max_payment, &min_payment,
+                                &overpayment, &total_sum);
   ck_assert_double_eq_tol(max_payment, 13333, 1);
   ck_assert_double_eq_tol(min_payment, 8416, 1);
   ck_assert_double_eq_tol(overpayment, 152500, 1);
@@ -128,7 +130,8 @@ END_TEST
 START_TEST(test_15) {
   char *credit_data = "500000 5 12a d";
   double max_payment = 0, min_payment = 0, overpayment = 0, total_sum = 0;
-  int status = credit_calculate(credit_data, &max_payment, &min_payment, &overpayment, &total_sum);
+  int status = credit_calculate(credit_data, &max_payment, &min_payment,
+                                &overpayment, &total_sum);
   ck_assert_int_eq(status, 0);
 }
 END_TEST
@@ -136,7 +139,8 @@ END_TEST
 START_TEST(test_16) {
   char *credit_data = "500000 5 12";
   double max_payment = 0, min_payment = 0, overpayment = 0, total_sum = 0;
-  int status = credit_calculate(credit_data, &max_payment, &min_payment, &overpayment, &total_sum);
+  int status = credit_calculate(credit_data, &max_payment, &min_payment,
+                                &overpayment, &total_sum);
   ck_assert_int_eq(status, 0);
 }
 END_TEST
