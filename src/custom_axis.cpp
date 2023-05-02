@@ -6,6 +6,7 @@ CustomAxis::CustomAxis(MainWindow *parent) :
     ui(new Ui::CustomAxis)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Область определения");
 }
 
 CustomAxis::~CustomAxis()

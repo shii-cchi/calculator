@@ -216,7 +216,6 @@ void MainWindow::plot_graph(int max_x, int min_x)
 
     QString data = replace_unary();
 
-
     QSplineSeries *series = get_series(data, max_x, min_x);
     chart->addSeries(series);
 
@@ -260,12 +259,19 @@ QSplineSeries* MainWindow::get_series(QString data, int max_x, int min_x)
     for (int i = min_x; i <= max_x; i+=step)
     {
         series->append(i, get_result(data, i));
-    }
 
-    if (step > 1)
-    {
-        series->append(1, get_result(data, 1));
-        series->append(-1, get_result(data, -1));
+        if (step > 1)
+        {
+            if (i + step == 0)
+            {
+                series->append(-1, get_result(data, -1));
+            }
+
+            if (i == 0)
+            {
+                series->append(1, get_result(data, 1));
+            }
+        }
     }
 
     return series;

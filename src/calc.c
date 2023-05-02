@@ -34,7 +34,7 @@ int check_dot_x(char *str_input) {
     int status = 1;
     int count_dot = 0, count_x = 0;
     for (int i = 0; i < (int)strlen(str_input); i++) {
-        if (str_input[i] == '.') {
+        if (str_input[i] == ',') {
             count_dot++;
             if (i == (int)strlen(str_input) - 1) {
                 if (!isdigit(str_input[i - 1])) {

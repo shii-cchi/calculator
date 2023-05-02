@@ -20,6 +20,7 @@ add_executable(Calculator
     calculator.cpp
     credit.cpp
     graph.cpp
+    custom_axis.cpp
     main.cpp
     calc.c
     pars.c
@@ -28,6 +29,7 @@ add_executable(Calculator
     calculator.ui
     credit.ui
     graph.ui
+    custom_axis.ui
 )
 
 target_link_libraries(Calculator Qt6::Widgets Qt6::Core)

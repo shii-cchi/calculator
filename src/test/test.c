@@ -55,7 +55,7 @@ END_TEST
 
 START_TEST(test_7) {
   double result = 0;
-  int status = calculate("0..34 + 2", &result);
+  int status = calculate("0,,34 + 2", &result);
   ck_assert_double_eq_tol(result, 0, 1e-8);
   ck_assert_int_eq(status, 0);
 }
@@ -63,7 +63,7 @@ END_TEST
 
 START_TEST(test_8) {
   double result = 0;
-  int status = calculate("0. + 5", &result);
+  int status = calculate("0, + 5", &result);
   ck_assert_double_eq_tol(result, 0, 1e-8);
   ck_assert_int_eq(status, 0);
 }
@@ -71,7 +71,7 @@ END_TEST
 
 START_TEST(test_9) {
   double result = 0;
-  int status = calculate("5 + .", &result);
+  int status = calculate("5 + ,", &result);
   ck_assert_double_eq_tol(result, 0, 1e-8);
   ck_assert_int_eq(status, 0);
 }

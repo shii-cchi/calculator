@@ -37,7 +37,7 @@ uninstall:
 	-rm -rf Calculator
 
 dvi:
-	$(OPEN) docs.html
+	$(OPEN) instruction/docs.html
 
 .PHONY: dist
 dist: 
@@ -66,8 +66,9 @@ tests: clean test_calc.a
 .PHONY: gcov_report
 gcov_report: clean tests
 	gcovr -r . --html-details -o report_calc.html
-
+	$(OPEN) report_calc.html
+	
 .PHONY: clean
 clean:
-	-rm -rf *.o *.a *.out *.gcda *.gcno *.css *.tar.gz
+	-rm -rf *.o *.a *.out *.gcda *.gcno *.css *.tar.gz *.html
 	-rm -rf tests Calculator
