@@ -36,9 +36,6 @@ install: clean
 uninstall: 
 	-rm -rf Calculator
 
-dvi:
-	$(OPEN) instruction/docs.html
-
 .PHONY: dist
 dist: 
 	-rm -rf *.tar.gz

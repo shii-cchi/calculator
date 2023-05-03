@@ -18,7 +18,7 @@ void Credit::on_run_count_clicked() {
     QString credit_data = ui->credit_sum->text() + " " +
                           ui->credit_term->text() + " " +
                           ui->credit_percent->text() + " " + credit_type;
-    char *str_credit_data = qstring_to_char(credit_data);
+    char *str_credit_data = credit_data.toLocal8Bit().data();
 
     double max_payment = 0, min_payment = 0, overpayment = 0, total_sum = 0;
     if (credit_calculate(str_credit_data, &max_payment, &min_payment,
@@ -62,12 +62,6 @@ QString Credit::get_credit_type() {
   }
 
   return credit_type;
-}
-
-char *Credit::qstring_to_char(QString qstr) {
-  QByteArray arr = qstr.toLocal8Bit();
-  char *str = arr.data();
-  return str;
 }
 
 int Credit::fields_is_empty() {

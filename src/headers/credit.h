@@ -26,7 +26,6 @@ class Credit : public QMainWindow {
 
   void clear();
   QString get_credit_type();
-  char *qstring_to_char(QString qstr);
   int fields_is_empty();
 };
 

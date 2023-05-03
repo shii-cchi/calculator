@@ -226,6 +226,11 @@ QSplineSeries *MainWindow::get_series(QString data, int max_x, int min_x) {
 
   int step = get_step(max_x, min_x);
 
+  if ((data.indexOf("sin") != -1 || data.indexOf("cos") != -1) &&
+      (step >= 10 || max_x - min_x == 2000)) {
+    step *= 10;
+  }
+
   for (int i = min_x; i <= max_x; i += step) {
     series->append(i, get_result(data, i));
 
